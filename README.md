@@ -1,6 +1,7 @@
 # Refonte du site de l'ED GEETS
 
 ## Archi:
+'''
 src
     components/                ← composants réutilisables sur tout le site
     pages/                     ← pages publiques (consultation)
@@ -12,3 +13,4 @@ src
 
 public
     logo.png  <- Logo de l'ED GEETS
+'''
