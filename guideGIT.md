@@ -53,9 +53,17 @@ git pull origin develop
 
 ## 5 — Installer les dépendances
 
+Le projet est divisé en deux parties (`client/` et `server/`), chacune avec ses propres dépendances. Une seule commande suffit depuis la racine :
+
 ```bash
-npm install
+npm run install:all
 ```
+
+> Si tu ajoutes un package toi-même, place-toi dans le bon dossier :
+> ```bash
+> cd client && npm install nom-du-package   # pour le frontend
+> cd server && npm install nom-du-package   # pour le backend
+> ```
 
 Pour lancer le site en local :
 
@@ -63,7 +71,9 @@ Pour lancer le site en local :
 npm run dev
 ```
 
-Le site sera accessible sur `http://localhost:5173` (ou le port indiqué dans le terminal).
+Cela démarre simultanément :
+- le frontend sur **http://localhost:3000**
+- l'API sur **http://localhost:3001/api**
 
 ---
 
