@@ -3,6 +3,9 @@ import { Routes, Route } from 'react-router-dom'
 import { AdminProvider } from './context/AdminContext.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
+import SearchModal from './components/SearchModal.jsx'
+import ColorSwitcher from './components/ColorSwitcher.jsx'
+import AccessibilityWidget from './components/AccessibilityWidget.jsx'
 import Home from './pages/Home.jsx'
 import NewsPage from './pages/NewsPage.jsx'
 import AgendaPage from './pages/AgendaPage.jsx'
@@ -38,6 +41,9 @@ export default function App() {
               </Routes>
             </main>
             <Footer />
+            <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+            <ColorSwitcher />
+            <AccessibilityWidget />
           </>
         } />
       </Routes>
