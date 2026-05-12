@@ -11,27 +11,36 @@ import FaqPage from './pages/FaqPage.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import PhdResourcesPage from './pages/PhdResourcesPage.jsx'
 import LegalNoticePage from './pages/LegalNoticePage.jsx'
+import AdminPage from './pages/AdminPage.jsx'
 
 export default function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
-
   return (
     <AdminProvider>
-      <Header onOpenSearch={() => setIsSearchOpen(true)} />
-      <main id="main-content">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/actualites" element={<NewsPage />} />
-          <Route path="/agenda" element={<AgendaPage />} />
-          <Route path="/laboratoires" element={<LaboratoriesPage />} />
-          <Route path="/faq" element={<FaqPage />} />
-          <Route path="/qui-sommes-nous" element={<AboutPage />} />
-          <Route path="/ressources-doctorants" element={<PhdResourcesPage />} />
-          <Route path="/mentions-legales" element={<LegalNoticePage />} />
-        </Routes>
-      </main>
-      <Footer />
-      {/* SearchModal sera ajouté ici plus tard */}
+      <Routes>
+        {/* Route admin — sans Header/Footer */}
+        <Route path="/admin" element={<AdminPage />} />
+
+        {/* Routes normales — avec Header/Footer */}
+        <Route path="/*" element={
+          <>
+            <Header onOpenSearch={() => setIsSearchOpen(true)} />
+            <main id="main-content">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/actualites" element={<NewsPage />} />
+                <Route path="/agenda" element={<AgendaPage />} />
+                <Route path="/laboratoires" element={<LaboratoriesPage />} />
+                <Route path="/faq" element={<FaqPage />} />
+                <Route path="/qui-sommes-nous" element={<AboutPage />} />
+                <Route path="/ressources-doctorants" element={<PhdResourcesPage />} />
+                <Route path="/mentions-legales" element={<LegalNoticePage />} />
+              </Routes>
+            </main>
+            <Footer />
+          </>
+        } />
+      </Routes>
     </AdminProvider>
   )
 }
