@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Search, Menu, X, ChevronDown, Globe } from 'lucide-react'
+import { Search, Menu, X, ChevronDown, Globe, LogOut, ShieldCheck } from 'lucide-react'
+import { useAdmin } from '../context/AdminContext'
 
 const languages = [
   { code: 'FR', name: 'Français', flag: '🇫🇷' },
@@ -54,6 +55,7 @@ export default function Header({ onOpenSearch }) {
   const [currentLang, setCurrentLang] = useState(languages[0])
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false)
   const langMenuRef = useRef(null)
+  const { isAdmin, logout } = useAdmin()
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -132,6 +134,19 @@ export default function Header({ onOpenSearch }) {
             {/* Actions desktop */}
             <div className="flex-shrink-0 flex items-center space-x-2">
               <div className="hidden md:flex items-center space-x-2">
+                {isAdmin && (
+                  <button
+                    onClick={logout}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-green-700 bg-green-50 border border-green-200 hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-brand-500 group"
+                    aria-label="Quitter le mode admin"
+                    title="Quitter le mode admin"
+                  >
+                    <ShieldCheck className="w-4 h-4 group-hover:hidden" />
+                    <LogOut className="w-4 h-4 hidden group-hover:block" />
+                    <span className="group-hover:hidden">Admin</span>
+                    <span className="hidden group-hover:inline">Déconnexion</span>
+                  </button>
+                )}
                 <button
                   onClick={onOpenSearch}
                   className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-slate-600 hover:text-brand-700 hover:bg-slate-100 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
@@ -256,6 +271,15 @@ export default function Header({ onOpenSearch }) {
                 <Search className="w-5 h-5" />
                 Rechercher
               </button>
+              {isAdmin && (
+                <button
+                  onClick={() => { logout(); setIsMobileMenuOpen(false) }}
+                  className="w-full flex items-center justify-center gap-2 px-3 py-3 text-sm font-semibold text-red-600 bg-red-50 border border-red-200 hover:bg-red-100 transition-colors"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Quitter le mode admin
+                </button>
+              )}
             </div>
           </div>
         )}
