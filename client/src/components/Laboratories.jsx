@@ -2,12 +2,19 @@ import { useRef, useState, useEffect } from 'react'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const labs = [
-  { name: 'LAAS', desc: "Laboratoire d'Analyse et d'Architecture des Systèmes", tags: ['STIC', 'SPI'] },
-  { name: 'CERCO', desc: 'Centre de Recherche Cerveau et Cognition', tags: ['Santé'] },
-  { name: 'CRCT', desc: 'Centre de Recherches en Cancérologie de Toulouse', tags: ['Santé'] },
-  { name: 'LAPLACE', desc: "Laboratoire Plasma et Conversion d'Énergie", tags: ['SPI'] },
-  { name: 'IRIT', desc: "Institut de Recherche en Informatique de Toulouse", tags: ['STIC'] },
-  { name: 'LGC', desc: 'Laboratoire de Génie Chimique', tags: ['SPI'] },
+  { name: 'LAPLACE',   desc: "Laboratoire PLAsma et Conversion d'Énergie",tags: ['SPI'],url: 'https://www.laplace.univ-tlse.fr/' },
+  { name: 'LAAS',   desc: "Laboratoire d'Analyse et d'Architecture des Systèmes",tags: ['STIC', 'SPI'],url: 'https://www.laas.fr/fr/' },
+  { name: 'OLIMPES',desc: 'Optronique, Laser, Imagerie Physique et Environnement Spatial',tags: ['SPI', 'Spatial'], url: 'https://www.isae-supaero.fr/offre-de-formations/formation-doctorale-isae-supaero/#onglet-lessentiel' },
+  { name: 'CERCO',desc: 'Centre de Recherche Cerveau et Cognition',tags: ['Santé'],url: 'https://cerco.cnrs.fr/en/cerco-umr5549-2/' },
+  { name: 'CRCT',desc: 'Centre de Recherches en Cancérologie de Toulouse',tags: ['Santé'],url: 'https://www.crct-inserm.fr/' },
+  { name: 'DPHE',desc: 'Diagnostic des plasmas hors équilibre',tags: ['SPI'],url: 'https://doctorat.univ-toulouse.fr/as/ed/fiche.pl?mat=3217&site=EDT&ed=48' },
+  { name: 'ENAC-LAB',desc: 'Laboratoire de Recherche ENAC',tags: ['SPI'],url: 'https://www.enac.fr/fr/le-laboratoire-de-recherche-enac' },
+  { name: 'I2MC',desc: 'Institut des Maladies Métaboliques et Cardiovasculaires',tags: ['Santé'],url: 'https://www.i2mc.inserm.fr/' },
+  { name: 'IRAP',desc: "Institut de Recherche en Astrophysique et Planétologie",tags: ['SPI'],url: 'https://www.irap.omp.eu/' },
+  { name: 'IUCT',desc: "Institut universitaire du cancer de Toulouse",tags: ['Santé'],url: 'https://www.iuct-oncopole.fr/le-laboratoire-de-biologie-medicale-oncologique' },
+  { name: 'LGP',    desc: 'Laboratoire Génie de Production',tags: ['SPI'],url: 'https://www.lgp.enit.fr/fr/lgp.html' },
+  { name: 'LPCNO',   desc: 'Laboratoire de Physique et Chimie des Nano-Objets',tags: ['SPI'],url: 'https://lpcno.insa-toulouse.fr/fr/' },
+  { name: 'ToNIC', desc: 'Toulouse NeuroImaging Center',tags: ['Santé'],url: 'https://tonic.inserm.fr/' },
 ]
 
 export default function Laboratories() {
@@ -40,7 +47,7 @@ export default function Laboratories() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div className="max-w-2xl">
             <h2 className="text-sm font-bold tracking-wide text-brand-700 uppercase mb-2">Réseau Scientifique</h2>
-            <h3 className="text-3xl font-bold text-slate-900 sm:text-4xl">Nos 15 Laboratoires</h3>
+            <h3 className="text-3xl font-bold text-slate-900 sm:text-4xl">Nos 13 Laboratoires</h3>
             <p className="mt-4 text-lg text-slate-600">
               Les doctorants du GEETS sont intégrés au sein d'unités de recherche de pointe, bénéficiant
               d'infrastructures de niveau international.
@@ -63,7 +70,9 @@ export default function Laboratories() {
             {labs.map((lab, i) => (
               <a
                 key={i}
-                href="#"
+                href={lab.url ?? '#'}
+                target={lab.url ? '_blank' : undefined}
+                rel={lab.url ? 'noopener noreferrer' : undefined}
                 className="flex-none w-[280px] sm:w-[320px] relative group snap-start outline-none"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-brand-500 to-teal-800 translate-y-2 translate-x-2 opacity-0 group-hover:opacity-20 transition-all duration-300" />

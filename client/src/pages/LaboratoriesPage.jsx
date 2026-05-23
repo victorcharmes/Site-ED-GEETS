@@ -17,7 +17,7 @@ export default function LaboratoriesPage() {
           </nav>
           <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-4 tracking-tight">Laboratoires</h1>
           <p className="text-xl text-univ-100 leading-relaxed max-w-2xl">
-            Découvrez les 15 unités de recherche de l'ED GEETS, intégrées dans les pôles de compétitivité AESE et CBS.
+            Découvrez les 13 unités de recherche de l'ED GEETS, intégrées dans les pôles de compétitivité AESE et CBS.
           </p>
         </div>
       </div>
