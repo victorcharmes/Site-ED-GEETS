@@ -1,11 +1,22 @@
 import { useState, useEffect } from 'react'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 
+import slide1 from '../images/DSCN0033.jpg'
+import slide2 from '../images/Femtika ecriture.jpg'
+import slide3 from '../images/Four oxydation.jpg'
+import slide4 from '../images/IMG20220728094019.jpg'
+import slide5 from '../images/IMG_5417.jpg'
+import slide6 from '../images/Image MNBT.png'
+import slide7 from '../images/Z PHTOLITHO_contrainte physique.jpg'
+
 const SLIDES = [
-  { id: 1, color: 'bg-univ-900' },
-  { id: 2, color: 'bg-brand-900' },
-  { id: 3, color: 'bg-univ-1000' },
-  { id: 4, color: 'bg-brand-1000' },
+  { id: 1, image: slide1, label: 'Laboratoire 1' },
+  { id: 2, image: slide2, label: 'Femtika' },
+  { id: 3, image: slide3, label: 'Four oxydation' },
+  { id: 4, image: slide4, label: 'Image 2022' },
+  { id: 5, image: slide5, label: 'Laboratoire 2' },
+  { id: 6, image: slide6, label: 'Image MNBT' },
+  { id: 7, image: slide7, label: 'PHTOLITHO' },
 ]
 
 export default function Hero() {
@@ -26,13 +37,21 @@ export default function Hero() {
       {SLIDES.map((slide, index) => (
         <div
           key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${slide.color} ${
+          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
             index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
           }`}
+          style={{
+            backgroundImage: `url(${slide.image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+          aria-hidden="true"
         />
       ))}
 
-      <div className="absolute inset-0 z-10 pointer-events-none flex items-center justify-between px-4 sm:px-6">
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-black/80 via-black/55 to-black/30" />
+
+      <div className="absolute inset-0 z-20 pointer-events-none flex items-center justify-between px-4 sm:px-6">
         <button
           onClick={prevSlide}
           className="pointer-events-auto p-2 sm:p-3 bg-white/10 text-white hover:bg-white/20 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-white backdrop-blur-md"
@@ -49,7 +68,7 @@ export default function Hero() {
         </button>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-30">
         <div className="max-w-3xl">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-6 uppercase tracking-widest opacity-95">
             École Doctorale
