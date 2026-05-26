@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
+import fs from 'fs'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 dotenv.config({ path: join(__dirname, '../.env') })
 import bcrypt from 'bcryptjs'
@@ -10,6 +11,8 @@ import newsRouter from './routes/news.js'
 import agendaRouter from './routes/agenda.js'
 import statsRouter from './routes/stats.js'
 import authRouter from './routes/auth.js'
+import aboutRouter from './routes/about.js'
+import resourcesRouter from './routes/resources.js'
 import db from './db/database.js'
 
 const app = express()
@@ -18,10 +21,17 @@ const PORT = process.env.PORT ?? 3001
 app.use(cors({ origin: 'http://localhost:3000' }))
 app.use(express.json())
 
+// Servir les fichiers uploadés
+const uploadsDir = join(__dirname, 'uploads')
+if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true })
+app.use('/uploads', express.static(uploadsDir))
+
 app.use('/api/news', newsRouter)
 app.use('/api/agenda', agendaRouter)
 app.use('/api/stats', statsRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/about', aboutRouter)
+app.use('/api/resources', resourcesRouter)
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }))
 

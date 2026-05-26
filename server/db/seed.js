@@ -2,6 +2,8 @@ export function seed(db) {
   const newsCount = db.prepare('SELECT COUNT(*) as count FROM news').get()
   const agendaCount = db.prepare('SELECT COUNT(*) as count FROM agenda').get()
   const statsCount = db.prepare('SELECT COUNT(*) as count FROM stats').get()
+  const aboutCount = db.prepare('SELECT COUNT(*) as count FROM about_blocks').get()
+  const resourcesCount = db.prepare('SELECT COUNT(*) as count FROM resources').get()
 
   const insertNews = db.prepare(
     'INSERT INTO news (title, date, category, content, image) VALUES (?, ?, ?, ?, ?)'
@@ -91,7 +93,106 @@ export function seed(db) {
     )
   })
 
+  const insertAbout = db.prepare(
+    'INSERT INTO about_blocks (block_key, title, content, content_type) VALUES (?, ?, ?, ?)'
+  )
+
+  const seedAbout = db.transaction(() => {
+    insertAbout.run(
+      'presentation',
+      "Présentation de l'École Doctorale GEETS",
+      JSON.stringify([
+        "L'École Doctorale GEETS est l'une des quinze composantes de l'École des Docteurs de Toulouse et forme des docteurs issus de diverses filières (Ingénieurs, Masters Nationaux et Internationaux) au sein de Laboratoires de réputation internationale et adossées aux pôles de compétitivité AESE et CBS.",
+        "Les doctorants sont formés par la recherche sur 7 spécialités touchant principalement aux Départements Scientifiques Sciences pour l'Ingénieur (SPI) et Sciences et Technologies de l'Information et de la Communication (STIC) et plus en marge au département Sciences du Vivant et de la Santé.",
+        "Toutes les thèses sont financées soit par des contrats doctoraux universitaires issus de nos établissements de tutelle, soit par des conventions CIFRES, des contrats DGA, ou encore de contrats de recherches. Des cotutelles avec des Universités étrangères représentent environ 10% des thèses.",
+        "De nombreux programmes internationaux développés par l'École des Docteurs de Toulouse enrichissent notre ouverture, par exemple le programme CSC (China Scholarship Council).",
+      ]),
+      'paragraphs'
+    )
+    insertAbout.run(
+      'industrie',
+      "De l'École Doctorale GEETS à l'Industrie",
+      JSON.stringify([
+        "Nos docteurs sont en majorité (55% environ) voués à des carrières en R&D dans des entreprises allant des PMI aux grands groupes, en France et à l'International : AIRBUS et ses sous-traitants, SAFRAN, LIEBHERR, ACTIA, LEROY SOMER, THALES, FREESCALE, CONTINENTAL.",
+        "La forte dynamique de l'École Doctorale GEETS a également permis la création par ces docteurs de plusieurs Start Up. De nombreuses Start Up sont nées grâce à nos docteurs et aux laboratoires.",
+      ]),
+      'paragraphs'
+    )
+    insertAbout.run(
+      'expertises',
+      "Domaines d'expertise",
+      JSON.stringify([
+        "Génie Électrique et Gestion de l'Énergie : du Composant au Système",
+        "Ingénierie des Plasmas",
+        "Haute Fréquence et Optique : de l'Électromagnétisme au Système",
+        "Nano Ingénierie et Intégration, Monitoring",
+        "Micro et Nano Bio Technologies",
+        "Radio Physique et Imagerie Médicale",
+        "Ingénierie pour la santé et pour le vivant",
+      ]),
+      'list'
+    )
+    insertAbout.run(
+      'chiffres',
+      "Chiffres clés",
+      JSON.stringify([
+        { value: '250 à 300', label: "doctorant(e)s dont environ 40% internationaux" },
+        { value: '309', label: "cadres scientifiques dont 170 HDR" },
+        { value: '55 à 65', label: "diplômé(e)s les 3 dernières années" },
+      ]),
+      'keyvalue'
+    )
+    insertAbout.run(
+      'unites',
+      "Unités de Recherche de renom",
+      JSON.stringify({
+        grands: "LAPLACE, LAAS, OLIMPES (ONERA-Équipes ISAE SUPAERO)\nONCOPOLE - CRCT (Imagerie Cérébrale et Handicaps Neurologiques) - TONIC",
+        autres: "LPCNO, CEMES, LGP, IRAP",
+      }),
+      'richtext'
+    )
+  })
+
+  const insertResource = db.prepare(
+    'INSERT INTO resources (title, category, type, date, size, url, content) VALUES (?, ?, ?, ?, ?, ?, ?)'
+  )
+
+  const seedResources = db.transaction(() => {
+    insertResource.run(
+      "Charte des thèses de l'Université de Toulouse",
+      'Réglementation', 'pdf', 'Mars 2023', '1.2 MB', '',
+      "Charte encadrant les droits et devoirs des doctorants et de leurs directeurs de thèse au sein de l'Université de Toulouse."
+    )
+    insertResource.run(
+      'Guide de la soutenance de thèse',
+      'Soutenance', 'texte', 'Janvier 2024', '15 KB', '',
+      "Procédure de soutenance :\n1. Désignation des rapporteurs (2 mois avant).\n2. Dépôt du manuscrit en ligne.\n3. Retour des pré-rapports (14 jours avant).\n4. Jour de la soutenance (présentation, questions, délibération).\n5. Dépôt définitif avec les corrections demandées par le jury."
+    )
+    insertResource.run(
+      "Formulaire d'enregistrement du CSI",
+      'Suivi', 'pdf', 'Février 2024', '450 KB', '',
+      "Formulaire type pour le rapport du Comité de Suivi Individuel. Ce document doit être rempli et signé par tous les membres du CSI et remis au secrétariat lors de la demande de réinscription."
+    )
+    insertResource.run(
+      "Procédure d'inscription en 1ère année",
+      'Inscription', 'texte', 'Septembre 2023', '12 KB', '',
+      "Pour vous inscrire en 1ère année de doctorat :\n- Avoir validé un diplôme de master (ou équivalent reconnu).\n- Avoir l'accord d'un directeur de thèse rattaché à l'une de nos équipes.\n- Bénéficier d'un financement assuré pour au moins 3 ans.\n- Créer et renseigner votre dossier sur ADUM avant la date limite."
+    )
+    insertResource.run(
+      'Liste des formations transversales éligibles',
+      'Formation', 'pdf', 'Novembre 2023', '2.1 MB', '',
+      "Catalogue complet des formations transversales. Rappel : les doctorants doivent valider au moins 100 heures de formations dont une formation obligatoire à l'éthique de la recherche."
+    )
+    insertResource.run(
+      'Vade-Mecum du doctorant GEETS',
+      'Général', 'texte', 'Octobre 2023', '18 KB', '',
+      "Le Vade-Mecum répond aux questions pratiques du doctorant dès son arrivée :\n- Horaires et accès aux locaux\n- Utilisation des ressources informatiques\n- Congés et absences\n- Organisation des déplacements et missions\n- Obligations en matière de publication et d'affiliation"
+    )
+  })
+
   if (newsCount.count === 0) seedNews()
   if (agendaCount.count === 0) seedAgenda()
   if (statsCount.count === 0) seedStats()
+  if (aboutCount.count === 0) seedAbout()
+  if (resourcesCount.count === 0) seedResources()
 }
