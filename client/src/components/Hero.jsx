@@ -89,7 +89,7 @@ export default function Hero() {
               </div>
             ))}
           </h1>
-          <div className="flex flex-col sm:flex-row gap-4">
+          {/* <div className="flex flex-col sm:flex-row gap-4">
             <a
               href="#offres"
               className="inline-flex justify-center items-center px-8 py-4 text-base font-semibold text-white bg-brand-700 hover:bg-brand-600 shadow-lg transition-all hover:-translate-y-1 focus:ring-4 focus:ring-brand-500/50"
@@ -103,7 +103,7 @@ export default function Hero() {
             >
               Accès Doctorants
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

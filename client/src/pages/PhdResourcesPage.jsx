@@ -441,7 +441,7 @@ function ResourceFormModal({ resource, onClose, onSave, saving, token }) {
             type="button"
             onClick={() => formRef.current?.requestSubmit()}
             disabled={isWorking}
-            className="inline-flex items-center gap-2 rounded-full bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-none bg-brand-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {uploading ? <Upload className="h-4 w-4 animate-bounce" /> : <Check className="h-4 w-4" />}
             {uploading ? 'Envoi du fichier…' : saving ? 'Enregistrement…' : isNew ? 'Ajouter' : 'Enregistrer'}
@@ -450,7 +450,7 @@ function ResourceFormModal({ resource, onClose, onSave, saving, token }) {
             type="button"
             onClick={onClose}
             disabled={isWorking}
-            className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-100 disabled:opacity-50"
+            className="inline-flex items-center gap-2 rounded-none border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-100 disabled:opacity-50"
           >
             Annuler
           </button>
@@ -565,7 +565,7 @@ export default function PhdResourcesPage() {
                     <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity z-10">
                       <button
                         onClick={() => setFormResource(r)}
-                        className="p-1.5 rounded-full bg-white border border-slate-200 text-slate-500 hover:border-brand-300 hover:text-brand-700 shadow-sm"
+                        className="p-1.5 rounded-none bg-white border border-slate-200 text-slate-500 hover:border-brand-300 hover:text-brand-700 shadow-sm"
                         title="Modifier"
                       >
                         <Pencil className="w-3.5 h-3.5" />
@@ -573,7 +573,7 @@ export default function PhdResourcesPage() {
                       <button
                         onClick={() => handleDelete(r.id)}
                         disabled={deletingId === r.id}
-                        className="p-1.5 rounded-full bg-white border border-slate-200 text-slate-500 hover:border-red-300 hover:text-red-600 shadow-sm disabled:opacity-50"
+                        className="p-1.5 rounded-none bg-white border border-slate-200 text-slate-500 hover:border-red-300 hover:text-red-600 shadow-sm disabled:opacity-50"
                         title="Supprimer"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
