@@ -8,6 +8,7 @@ dotenv.config({ path: join(__dirname, '../.env') })
 import bcrypt from 'bcryptjs'
 import newsRouter from './routes/news.js'
 import agendaRouter from './routes/agenda.js'
+import statsRouter from './routes/stats.js'
 import authRouter from './routes/auth.js'
 import db from './db/database.js'
 
@@ -19,6 +20,7 @@ app.use(express.json())
 
 app.use('/api/news', newsRouter)
 app.use('/api/agenda', agendaRouter)
+app.use('/api/stats', statsRouter)
 app.use('/api/auth', authRouter)
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }))
