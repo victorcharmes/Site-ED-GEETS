@@ -1,12 +1,16 @@
 export function seed(db) {
   const newsCount = db.prepare('SELECT COUNT(*) as count FROM news').get()
-  if (newsCount.count > 0) return
+  const agendaCount = db.prepare('SELECT COUNT(*) as count FROM agenda').get()
+  const statsCount = db.prepare('SELECT COUNT(*) as count FROM stats').get()
 
   const insertNews = db.prepare(
     'INSERT INTO news (title, date, category, content, image) VALUES (?, ?, ?, ?, ?)'
   )
   const insertAgenda = db.prepare(
     'INSERT INTO agenda (title, date, time, location, type, content) VALUES (?, ?, ?, ?, ?, ?)'
+  )
+  const insertStats = db.prepare(
+    'INSERT INTO stats (stat_key, value, title, detail, detail_type) VALUES (?, ?, ?, ?, ?)'
   )
 
   const seedNews = db.transaction(() => {
@@ -60,6 +64,34 @@ export function seed(db) {
     )
   })
 
-  seedNews()
-  seedAgenda()
+  const seedStats = db.transaction(() => {
+    insertStats.run(
+      'doctorants',
+      '250',
+      'Doctorantes & Doctorants',
+      "Afficher par exemple le pourcentage d'internationaux.",
+      'text'
+    )
+    insertStats.run('docteurs', 'xx', 'Docteurs', 'A modifier selon vos besoins.', 'text')
+    insertStats.run(
+      'specialites',
+      '8',
+      'Domaines de spécialités',
+      JSON.stringify([
+        'Micro et Nanosystèmes',
+        'Électromagnétisme et systèmes haute fréquence',
+        'Photonique et systèmes optoélectroniques',
+        "Composants et systèmes de gestion de l'énergie",
+        'Génie électrique',
+        'Ingénierie des plasmas',
+        'Radio-physique et imagerie médicale',
+        'Ingénierie pour la santé et pour le vivant',
+      ]),
+      'list'
+    )
+  })
+
+  if (newsCount.count === 0) seedNews()
+  if (agendaCount.count === 0) seedAgenda()
+  if (statsCount.count === 0) seedStats()
 }

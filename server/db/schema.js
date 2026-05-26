@@ -18,6 +18,15 @@ export const schema = `
     content TEXT NOT NULL DEFAULT '',
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
+  CREATE TABLE IF NOT EXISTS stats (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    stat_key TEXT NOT NULL UNIQUE,
+    value TEXT NOT NULL DEFAULT '',
+    title TEXT NOT NULL,
+    detail TEXT NOT NULL DEFAULT '',
+    detail_type TEXT NOT NULL DEFAULT 'text',
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
   CREATE TABLE IF NOT EXISTS admins (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
