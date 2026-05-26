@@ -33,6 +33,17 @@ export const schema = `
     password TEXT NOT NULL,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
+  CREATE TABLE IF NOT EXISTS resources (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    category TEXT NOT NULL DEFAULT 'Général',
+    type TEXT NOT NULL DEFAULT 'pdf',
+    date TEXT NOT NULL DEFAULT '',
+    size TEXT NOT NULL DEFAULT '',
+    url TEXT NOT NULL DEFAULT '',
+    content TEXT NOT NULL DEFAULT '',
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
   CREATE TABLE IF NOT EXISTS about_blocks (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     block_key TEXT NOT NULL UNIQUE,
