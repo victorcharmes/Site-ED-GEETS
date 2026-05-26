@@ -10,7 +10,6 @@ const cards = [
 export default function HubPermanent() {
   return (
     <section id="permanents" className="py-24 bg-brand-900 text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-900 to-brand-800 opacity-50" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <nav className="flex text-sm text-brand-300 mb-8 font-medium" aria-label="Breadcrumb">
