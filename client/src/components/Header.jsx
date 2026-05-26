@@ -39,14 +39,18 @@ const navItems = [
   {
     title: 'Liens utiles',
     href: '/#',
-    isHighlight: true,
     subItems: [
-      { title: 'ADUM', href: '/#' },
       { title: 'Hub Doctorant', href: '/#doctorants' },
       { title: 'Hub Permanent', href: '/#permanents' },
       { title: 'Déposer thèse', href: '/#' },
       { title: 'FAQ', href: '/faq' },
     ],
+  },
+  {
+    title: 'ADUM',
+    href: 'https://doctorat.univ-toulouse.fr/index.pl',
+    isHighlight: true,
+    subItems: [],
   },
 ]
 
@@ -56,6 +60,8 @@ export default function Header({ onOpenSearch }) {
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false)
   const langMenuRef = useRef(null)
   const { isAdmin, logout } = useAdmin()
+
+  const isExternalLink = (href) => /^https?:\/\//.test(href)
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -101,32 +107,48 @@ export default function Header({ onOpenSearch }) {
             <nav className="hidden md:flex flex-1 space-x-6 lg:space-x-8 justify-end mr-8" aria-label="Menu principal">
               {navItems.map((item, index) => (
                 <div key={index} className="relative group">
-                  <Link
-                    to={item.href}
-                    className={`flex items-center gap-1 font-medium transition-colors border-b-2 border-transparent py-2 ${
-                      item.isHighlight
-                        ? 'text-brand-700 font-bold hover:border-brand-700'
-                        : 'text-slate-700 hover:text-brand-700 hover:border-brand-700'
-                    }`}
-                  >
-                    {item.title}
-                    <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-brand-700 transition-transform group-hover:rotate-180" />
-                  </Link>
+                  {isExternalLink(item.href) ? (
+                    <a
+                      href={item.href}
+                      className={`flex items-center gap-1 font-medium transition-colors border-b-2 border-transparent py-2 ${
+                        item.isHighlight
+                          ? 'text-brand-700 font-bold hover:border-brand-700'
+                          : 'text-slate-700 hover:text-brand-700 hover:border-brand-700'
+                      }`}
+                    >
+                      {item.title}
+                    </a>
+                  ) : (
+                    <Link
+                      to={item.href}
+                      className={`flex items-center gap-1 font-medium transition-colors border-b-2 border-transparent py-2 ${
+                        item.isHighlight
+                          ? 'text-brand-700 font-bold hover:border-brand-700'
+                          : 'text-slate-700 hover:text-brand-700 hover:border-brand-700'
+                      }`}
+                    >
+                      {item.title}
+                      {item.subItems.length > 0 && (
+                        <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-brand-700 transition-transform group-hover:rotate-180" />
+                      )}
+                    </Link>
+                  )}
 
-                  {/* Dropdown */}
-                  <div className="absolute left-0 top-full pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 z-50">
-                    <div className="bg-white shadow-xl border border-slate-100 overflow-hidden py-2">
-                      {item.subItems.map((subItem, subIndex) => (
-                        <Link
-                          key={subIndex}
-                          to={subItem.href}
-                          className="block px-4 py-2.5 text-sm text-slate-600 hover:text-brand-700 hover:bg-slate-50 transition-colors"
-                        >
-                          {subItem.title}
-                        </Link>
-                      ))}
+                  {item.subItems.length > 0 && (
+                    <div className="absolute left-0 top-full pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 z-50">
+                      <div className="bg-white shadow-xl border border-slate-100 overflow-hidden py-2">
+                        {item.subItems.map((subItem, subIndex) => (
+                          <Link
+                            key={subIndex}
+                            to={subItem.href}
+                            className="block px-4 py-2.5 text-sm text-slate-600 hover:text-brand-700 hover:bg-slate-50 transition-colors"
+                          >
+                            {subItem.title}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               ))}
             </nav>
@@ -217,29 +239,45 @@ export default function Header({ onOpenSearch }) {
             <div className="px-4 pt-2 pb-4 space-y-1">
               {navItems.map((item, index) => (
                 <div key={index} className="space-y-1">
-                  <Link
-                    to={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block px-3 py-3 text-base ${
-                      item.isHighlight
-                        ? 'font-bold text-brand-800 bg-brand-50 border-l-4 border-brand-700'
-                        : 'font-medium text-slate-800 hover:text-brand-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    {item.title}
-                  </Link>
-                  <div className="pl-6 pr-3 py-1 space-y-1 border-l-2 border-slate-100 ml-3">
-                    {item.subItems.map((subItem, subIndex) => (
-                      <Link
-                        key={subIndex}
-                        to={subItem.href}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="block px-3 py-2 text-sm font-medium text-slate-500 hover:text-brand-700 hover:bg-slate-50"
-                      >
-                        {subItem.title}
-                      </Link>
-                    ))}
-                  </div>
+                  {isExternalLink(item.href) ? (
+                    <a
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`block px-3 py-3 text-base ${
+                        item.isHighlight
+                          ? 'font-bold text-brand-800 bg-brand-50 border-l-4 border-brand-700'
+                          : 'font-medium text-slate-800 hover:text-brand-700 hover:bg-slate-50'
+                      }`}
+                    >
+                      {item.title}
+                    </a>
+                  ) : (
+                    <Link
+                      to={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`block px-3 py-3 text-base ${
+                        item.isHighlight
+                          ? 'font-bold text-brand-800 bg-brand-50 border-l-4 border-brand-700'
+                          : 'font-medium text-slate-800 hover:text-brand-700 hover:bg-slate-50'
+                      }`}
+                    >
+                      {item.title}
+                    </Link>
+                  )}
+                  {item.subItems.length > 0 && (
+                    <div className="pl-6 pr-3 py-1 space-y-1 border-l-2 border-slate-100 ml-3">
+                      {item.subItems.map((subItem, subIndex) => (
+                        <Link
+                          key={subIndex}
+                          to={subItem.href}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="block px-3 py-2 text-sm font-medium text-slate-500 hover:text-brand-700 hover:bg-slate-50"
+                        >
+                          {subItem.title}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
