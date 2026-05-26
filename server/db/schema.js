@@ -33,4 +33,12 @@ export const schema = `
     password TEXT NOT NULL,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
+  CREATE TABLE IF NOT EXISTS about_blocks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    block_key TEXT NOT NULL UNIQUE,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL DEFAULT '[]',
+    content_type TEXT NOT NULL DEFAULT 'paragraphs',
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+  );
 `

@@ -10,6 +10,7 @@ import newsRouter from './routes/news.js'
 import agendaRouter from './routes/agenda.js'
 import statsRouter from './routes/stats.js'
 import authRouter from './routes/auth.js'
+import aboutRouter from './routes/about.js'
 import db from './db/database.js'
 
 const app = express()
@@ -22,6 +23,7 @@ app.use('/api/news', newsRouter)
 app.use('/api/agenda', agendaRouter)
 app.use('/api/stats', statsRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/about', aboutRouter)
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }))
 
