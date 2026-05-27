@@ -490,8 +490,11 @@ export default function PhdResourcesPage() {
       const target = resources.find((r) => String(r.id) === openId)
       if (target) {
         setSelected(target)
-        // Nettoyer l'URL pour ne pas réouvrir à chaque rechargement
-        setSearchParams({})
+        // Nettoyer uniquement openTitle sans perdre les autres paramètres
+        // et sans ajouter une entrée d'historique supplémentaire.
+        const nextSearchParams = new URLSearchParams(searchParams)
+        nextSearchParams.delete('openTitle')
+        setSearchParams(nextSearchParams, { replace: true })
       }
     }
   }, [searchParams, resources, setSearchParams])
