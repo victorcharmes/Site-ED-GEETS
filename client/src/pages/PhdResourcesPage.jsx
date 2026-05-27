@@ -483,11 +483,11 @@ export default function PhdResourcesPage() {
       .catch(() => {})
   }, [])
 
-  // Ouvre automatiquement la ressource si l'URL contient openTitle
+  // Ouvre automatiquement la ressource si l'URL contient openId
   useEffect(() => {
-    const openTitle = searchParams.get('openTitle')
-    if (openTitle && resources.length > 0) {
-      const target = resources.find((r) => r.title === openTitle)
+    const openId = searchParams.get('openId')
+    if (openId && resources.length > 0) {
+      const target = resources.find((r) => String(r.id) === openId)
       if (target) {
         setSelected(target)
         // Nettoyer l'URL pour ne pas réouvrir à chaque rechargement
