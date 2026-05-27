@@ -54,7 +54,7 @@ router.get('/', (req, res) => {
     LIMIT 3
   `).all(like, like, like)
   newsResults.forEach((r) =>
-    results.push({ ...r, url: `/` })
+    results.push({ ...r, url: `/actualites?openId=${r.id}` })
   )
 
   // ── Agenda ────────────────────────────────────────────────────────────────
@@ -65,7 +65,7 @@ router.get('/', (req, res) => {
     LIMIT 3
   `).all(like, like, like)
   agendaResults.forEach((r) =>
-    results.push({ ...r, url: `/` })
+    results.push({ ...r, url: `/agenda?openId=${r.id}` })
   )
 
   res.json(results)

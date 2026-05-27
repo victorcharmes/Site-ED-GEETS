@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Clock, Plus, Edit2, Trash2, X, FileText } from 'lucide-react'
 import { useAdmin } from '../context/AdminContext.jsx'
 import SimpleEditor from '../components/SimpleEditor.jsx'
@@ -134,6 +134,7 @@ function EditModal({ item, onClose, onSave }) {
 
 export default function NewsPage() {
   const { isAdmin } = useAdmin()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [news, setNews] = useState([])
   const [editTarget, setEditTarget] = useState(null)
   const [isCreating, setIsCreating] = useState(false)
@@ -147,6 +148,20 @@ export default function NewsPage() {
       .then(setNews)
       .catch(() => {})
   }, [])
+
+  // Ouvre automatiquement l'actualité si l'URL contient openId
+  useEffect(() => {
+    const openId = searchParams.get('openId')
+    if (openId && news.length > 0) {
+      const target = news.find((n) => String(n.id) === openId)
+      if (target) {
+        setSelectedNews(target)
+        const next = new URLSearchParams(searchParams)
+        next.delete('openId')
+        setSearchParams(next, { replace: true })
+      }
+    }
+  }, [searchParams, news, setSearchParams])
 
   const handleCreate = async (form) => {
     const res = await fetch('/api/news', {
