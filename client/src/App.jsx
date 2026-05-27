@@ -12,6 +12,7 @@ import LaboratoriesPage from './pages/LaboratoriesPage.jsx'
 import FaqPage from './pages/FaqPage.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import PhdResourcesPage from './pages/PhdResourcesPage.jsx'
+import PermanentResourcesPage from './pages/PermanentResourcesPage.jsx'
 import LegalNoticePage from './pages/LegalNoticePage.jsx'
 import AdminPage from './pages/AdminPage.jsx'
 
@@ -36,6 +37,7 @@ export default function App() {
                 <Route path="/faq" element={<FaqPage />} />
                 <Route path="/qui-sommes-nous" element={<AboutPage />} />
                 <Route path="/ressources-doctorants" element={<PhdResourcesPage />} />
+                <Route path="/ressources-permanents" element={<PermanentResourcesPage />} />
                 <Route path="/mentions-legales" element={<LegalNoticePage />} />
               </Routes>
             </main>
