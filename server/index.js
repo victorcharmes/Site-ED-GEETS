@@ -13,6 +13,7 @@ import statsRouter from './routes/stats.js'
 import authRouter from './routes/auth.js'
 import aboutRouter from './routes/about.js'
 import resourcesRouter from './routes/resources.js'
+import permanentResourcesRouter from './routes/permanent_resources.js'
 import db from './db/database.js'
 
 const app = express()
@@ -32,6 +33,7 @@ app.use('/api/stats', statsRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/about', aboutRouter)
 app.use('/api/resources', resourcesRouter)
+app.use('/api/permanent-resources', permanentResourcesRouter)
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }))
 

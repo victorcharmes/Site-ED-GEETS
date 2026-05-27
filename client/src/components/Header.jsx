@@ -33,7 +33,7 @@ const navItems = [
     href: '/#',
     subItems: [
       { title: 'Doctorants', href: '/ressources-doctorants' },
-      { title: 'Permanents', href: '/#' },
+      { title: 'Permanents', href: '/ressources-permanents' },
     ],
   },
   {
