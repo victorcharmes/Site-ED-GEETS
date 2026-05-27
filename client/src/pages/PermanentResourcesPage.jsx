@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import {
   FileText, Download, X, Eye, File as FileIcon,
   Pencil, Trash2, Plus, Check, ExternalLink, AlertCircle, Upload, Link as LinkIcon,
@@ -462,6 +462,7 @@ function ResourceFormModal({ resource, onClose, onSave, saving, token }) {
 
 // ── Page principale ─────────────────────────────────────────────────────────
 export default function PermanentResourcesPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [resources, setResources] = useState(fallbackResources)
   const [selected, setSelected] = useState(null)   // visualisation
   const [formResource, setFormResource] = useState(null) // null = fermé
@@ -477,6 +478,21 @@ export default function PermanentResourcesPage() {
       .then((data) => { if (Array.isArray(data) && data.length > 0) setResources(data) })
       .catch(() => {})
   }, [])
+
+  // Ouvre automatiquement la ressource si l'URL contient openTitle
+  useEffect(() => {
+    const openTitle = searchParams.get('openTitle')
+    if (openTitle && resources.length > 0) {
+      const needle = openTitle.toLowerCase()
+      const target = resources.find((r) => r.title.toLowerCase().includes(needle))
+      if (target) {
+        setSelected(target)
+        const nextSearchParams = new URLSearchParams(searchParams)
+        nextSearchParams.delete('openTitle')
+        setSearchParams(nextSearchParams, { replace: true })
+      }
+    }
+  }, [searchParams, resources, setSearchParams])
 
   // ── Sauvegarde (create ou update) ──────────────────────────────────────
   const handleSave = async (data) => {

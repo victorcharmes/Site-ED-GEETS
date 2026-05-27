@@ -483,15 +483,14 @@ export default function PhdResourcesPage() {
       .catch(() => {})
   }, [])
 
-  // Ouvre automatiquement la ressource si l'URL contient openId
+  // Ouvre automatiquement la ressource si l'URL contient openTitle
   useEffect(() => {
-    const openId = searchParams.get('openId')
-    if (openId && resources.length > 0) {
-      const target = resources.find((r) => String(r.id) === openId)
+    const openTitle = searchParams.get('openTitle')
+    if (openTitle && resources.length > 0) {
+      const needle = openTitle.toLowerCase()
+      const target = resources.find((r) => r.title.toLowerCase().includes(needle))
       if (target) {
         setSelected(target)
-        // Nettoyer uniquement openTitle sans perdre les autres paramètres
-        // et sans ajouter une entrée d'historique supplémentaire.
         const nextSearchParams = new URLSearchParams(searchParams)
         nextSearchParams.delete('openTitle')
         setSearchParams(nextSearchParams, { replace: true })
