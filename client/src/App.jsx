@@ -13,6 +13,8 @@ import FaqPage from './pages/FaqPage.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import PhdResourcesPage from './pages/PhdResourcesPage.jsx'
 import LegalNoticePage from './pages/LegalNoticePage.jsx'
+import RgpdPage from './pages/RgpdPage.jsx'
+import AccessibilityPage from './pages/AccessibilityPage.jsx'
 import AdminPage from './pages/AdminPage.jsx'
 
 export default function App() {
@@ -37,6 +39,8 @@ export default function App() {
                 <Route path="/qui-sommes-nous" element={<AboutPage />} />
                 <Route path="/ressources-doctorants" element={<PhdResourcesPage />} />
                 <Route path="/mentions-legales" element={<LegalNoticePage />} />
+                <Route path="/rgpd" element={<RgpdPage />} />
+                <Route path="/accessibilite" element={<AccessibilityPage />} />
               </Routes>
             </main>
             <Footer />
