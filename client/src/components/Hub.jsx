@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { ArrowRight, FileText, Calendar, BookOpen, GraduationCap } from 'lucide-react'
 
 const cards = [
@@ -42,15 +43,15 @@ export default function Hub() {
 
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {cards.map(({ icon: Icon, title, desc }) => (
-              <a
+              <Link
                 key={title}
-                href="#"
+                to={`/ressources-doctorants?openTitle=${encodeURIComponent(title)}`}
                 className="block p-6 bg-univ-800 border border-univ-700 hover:bg-univ-700 hover:border-brand-400 transition-all group focus-visible:ring-2 focus-visible:ring-brand-400"
               >
                 <Icon className="w-8 h-8 text-brand-400 mb-4 group-hover:scale-110 transition-transform" />
                 <h3 className="text-lg font-bold text-white mb-1">{title}</h3>
                 <p className="text-sm text-univ-300">{desc}</p>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

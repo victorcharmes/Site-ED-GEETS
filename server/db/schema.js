@@ -42,6 +42,7 @@ export const schema = `
     size TEXT NOT NULL DEFAULT '',
     url TEXT NOT NULL DEFAULT '',
     content TEXT NOT NULL DEFAULT '',
+    is_protected INTEGER NOT NULL DEFAULT 0,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
   CREATE TABLE IF NOT EXISTS permanent_resources (
