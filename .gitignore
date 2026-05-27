@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# SQLite WAL mode temp files (ne jamais committer)
+*.sqlite-shm
+*.sqlite-wal
