@@ -74,7 +74,7 @@ export function seed(db) {
       "Afficher par exemple le pourcentage d'internationaux.",
       'text'
     )
-    insertStats.run('docteurs', 'xx', 'Docteurs', 'A modifier selon vos besoins.', 'text')
+    insertStats.run('permanents', 'xx', 'Permanents', 'A modifier selon vos besoins. Afficher le nombre de soutenances par exemple.', 'text')
     insertStats.run(
       'specialites',
       '8',

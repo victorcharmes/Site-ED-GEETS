@@ -80,15 +80,14 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-                  Politique de confidentialité
-                </a>
+                <Link to="/rgpd" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
+                  Informations RGPD
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm font-medium text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                <Link to="/rgaa" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
                   Déclaration d'accessibilité (RGAA)
-                  <span className="w-2 h-2 rounded-full bg-yellow-500 flex-shrink-0" title="Statut RGAA : Partiellement conforme" />
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -101,7 +100,7 @@ export default function Footer() {
             onClick={toggleAdmin}
             className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold border transition-colors ${
               isAdmin
-                ? 'bg-red-900/40 text-red-400 border-red-800 outline outline-1 outline-red-700'
+                ? 'bg-red-900/40 text-red-400 border-red-800 outline-1 outline-red-700'
                 : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-white'
             }`}
             title="Activer/Désactiver le mode administrateur (démo)"

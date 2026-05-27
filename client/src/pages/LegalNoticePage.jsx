@@ -21,7 +21,11 @@ const sections = [
   },
   {
     title: '4. Données personnelles',
-    content: <p>Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition aux données vous concernant. Pour exercer ces droits : <a href="mailto:geets@laas.fr" className="text-brand-700 hover:underline">geets@laas.fr</a>.</p>,
+    content: (
+      <p>
+        Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, d'effacement et d'opposition aux données vous concernant. Pour en savoir plus sur le traitement de vos données personnelles, consultez la page <Link to="/rgpd" className="text-brand-700 hover:underline">Informations RGPD</Link>. Pour exercer vos droits : <a href="mailto:geets@laas.fr" className="text-brand-700 hover:underline">geets@laas.fr</a>.
+      </p>
+    ),
   },
   {
     title: '5. Propriété intellectuelle',

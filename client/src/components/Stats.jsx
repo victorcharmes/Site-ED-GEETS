@@ -204,7 +204,7 @@ export default function Stats() {
               <textarea
                 name="detail"
                 defaultValue={formatDetailValue(editingStatData)}
-                className="min-h-[160px] border border-slate-300 bg-white px-4 py-3 text-slate-900 shadow-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
+                className="min-h-40 border border-slate-300 bg-white px-4 py-3 text-slate-900 shadow-sm outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-100"
               />
             </label>
 

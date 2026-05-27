@@ -8,8 +8,7 @@ const partners = [
   { name: 'INP Toulouse', logo: 'https://www.univ-tlse3.fr/medias/photo/logo-ut-site_1747041194008-png?ID_FICHE=1019451' },
   { name: 'CNRS', logo: 'https://adum.fr/logos/etenac.jpg' },
   { name: 'LAAS-CNRS', logo: 'https://adum.fr/logos/et246.jpg' },
-  { name: 'IRIT', logo: 'https://www.irit.fr/wp-content/uploads/2019/11/logo-irit-bleu.png' },
-  { name: 'LAPLACE', logo: 'https://www.laplace.univ-tlse.fr/wp-content/uploads/2020/09/logo-laplace-1.png' },
+  { name: 'REDOC SPI', logo: 'https://static.wixstatic.com/media/69d215_50a6f3e993f7407587f9d14e8541ccf3~mv2.png/v1/fill/w_179,h_104,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/69d215_50a6f3e993f7407587f9d14e8541ccf3~mv2.png'},
 ]
 
 export default function Partners() {
