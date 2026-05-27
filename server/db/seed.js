@@ -4,6 +4,7 @@ export function seed(db) {
   const statsCount = db.prepare('SELECT COUNT(*) as count FROM stats').get()
   const aboutCount = db.prepare('SELECT COUNT(*) as count FROM about_blocks').get()
   const resourcesCount = db.prepare('SELECT COUNT(*) as count FROM resources').get()
+  const faqCount = db.prepare('SELECT COUNT(*) as count FROM faq_categories').get()
 
   const insertNews = db.prepare(
     'INSERT INTO news (title, date, category, content, image) VALUES (?, ?, ?, ?, ?)'
@@ -190,9 +191,31 @@ export function seed(db) {
     )
   })
 
+  const insertFaqCat = db.prepare(
+    'INSERT INTO faq_categories (title, position) VALUES (?, ?)'
+  )
+  const insertFaqQ = db.prepare(
+    'INSERT INTO faq_questions (category_id, question, answer, position) VALUES (?, ?, ?, ?)'
+  )
+
+  const seedFaq = db.transaction(() => {
+    const cat1 = insertFaqCat.run('Questions fréquentes Doctorants', 0)
+    insertFaqQ.run(cat1.lastInsertRowid, "Comment s'inscrire en thèse ?", "L'inscription en thèse se fait via la plateforme ADUM après accord du directeur de thèse et du directeur de laboratoire. Vous devez remplir votre dossier en ligne et fournir les pièces demandées.", 0)
+    insertFaqQ.run(cat1.lastInsertRowid, "Quelles sont les conditions de financement ?", "L'inscription en doctorat à plein temps nécessite un financement minimum de 3 ans (contrat doctoral, bourse CIFRE, etc.). Les doctorants salariés à temps plein pour autre chose peuvent faire une thèse à temps partiel.", 1)
+    insertFaqQ.run(cat1.lastInsertRowid, "Comment organiser ma soutenance ?", "La procédure de soutenance doit être initiée au moins 2 à 3 mois avant la date prévue dans votre espace ADUM. Vous devrez y renseigner vos rapporteurs, votre jury et soumettre votre manuscrit.", 2)
+    insertFaqQ.run(cat1.lastInsertRowid, "Qu'est-ce que le CSI (Comité de Suivi Individuel) ?", "Le CSI s'assure du bon déroulement de votre thèse. Il est obligatoire chaque année pour votre réinscription. Vous devez organiser une réunion avec ses membres et fournir le compte-rendu signé.", 3)
+    insertFaqQ.run(cat1.lastInsertRowid, "Combien d'heures de formation dois-je valider ?", "Chaque doctorant doit valider 100 heures de formation au cours de sa thèse (scientifiques et transversales) dont l'éthique de la recherche avant sa soutenance.", 4)
+
+    const cat2 = insertFaqCat.run('Questions fréquentes Permanents', 1)
+    insertFaqQ.run(cat2.lastInsertRowid, "Comment proposer un sujet de thèse ?", "Les propositions de sujets se font via l'espace ADUM. Vous devez être titulaire d'une HDR ou demander une dérogation temporelle pour diriger vos travaux.", 0)
+    insertFaqQ.run(cat2.lastInsertRowid, "Comment obtenir l'Habilitation à Diriger des Recherches (HDR) ?", "Le dossier de demande d'autorisation à concourir pour l'HDR doit être déposé auprès du conseil académique de l'établissement concerné. L'ED GEETS émettra un avis sur ce dossier.", 1)
+    insertFaqQ.run(cat2.lastInsertRowid, "Comment organiser une soutenance en tant que directeur ?", "Le directeur de thèse propose les rapporteurs et la composition du jury dans l'espace ADUM du doctorant. Assurez-vous que les règles de parité et de proportion de membres extérieurs sont respectées.", 2)
+  })
+
   if (newsCount.count === 0) seedNews()
   if (agendaCount.count === 0) seedAgenda()
   if (statsCount.count === 0) seedStats()
   if (aboutCount.count === 0) seedAbout()
   if (resourcesCount.count === 0) seedResources()
+  if (faqCount.count === 0) seedFaq()
 }
