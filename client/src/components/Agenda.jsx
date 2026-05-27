@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Clock, MapPin, Pencil, Trash2, Plus, X, Check } from 'lucide-react'
 import { useAdmin } from '../context/AdminContext'
 
@@ -95,6 +95,7 @@ function AgendaForm({ initial = {}, onSave, onCancel, token }) {
 }
 
 function AgendaCard({ event, isAdmin, token, onRefresh }) {
+  const navigate = useNavigate()
   const { day, month } = parseDate(event.date)
   const [editing, setEditing] = useState(false)
 
@@ -120,8 +121,11 @@ function AgendaCard({ event, isAdmin, token, onRefresh }) {
 
   return (
     <div className="relative group h-full">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-500 to-teal-800 translate-y-2 translate-x-2 opacity-0 group-hover:opacity-20 transition-all duration-300" />
-      <article className="relative h-full flex flex-col border border-slate-200 bg-white shadow-sm overflow-hidden group-hover:shadow-xl group-hover:-translate-y-2 transition-all duration-500">
+      <div className="absolute inset-0 bg-linear-to-br from-brand-500 to-teal-800 translate-y-2 translate-x-2 opacity-0 group-hover:opacity-20 transition-all duration-300" />
+      <article
+        className="relative h-full flex flex-col border border-slate-200 bg-white shadow-sm overflow-hidden group-hover:shadow-xl group-hover:-translate-y-2 transition-all duration-500 cursor-pointer"
+        onClick={() => navigate(`/agenda?openId=${event.id}`)}
+      >
         <div className="bg-brand-700 text-white p-5 flex items-center justify-between group-hover:bg-brand-800 transition-colors">
           <div className="flex items-baseline gap-2">
             <span className="text-4xl font-black leading-none">{day}</span>
@@ -133,7 +137,7 @@ function AgendaCard({ event, isAdmin, token, onRefresh }) {
             </span>
             {/* Boutons admin */}
             {isAdmin && (
-              <div className="flex gap-1">
+              <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
                 <button
                   onClick={() => setEditing(true)}
                   className="p-1.5 bg-white/20 hover:bg-white hover:text-brand-700 text-white transition-colors"
@@ -157,13 +161,13 @@ function AgendaCard({ event, isAdmin, token, onRefresh }) {
           <div className="flex flex-col gap-3 text-sm text-slate-600 mt-auto pt-4 border-t border-slate-200/60">
             {event.time && (
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                <Clock className="w-4 h-4 text-slate-400 shrink-0" />
                 <span>{event.time}</span>
               </div>
             )}
             {event.location && (
               <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
                 <span className="truncate" title={event.location}>{event.location}</span>
               </div>
             )}

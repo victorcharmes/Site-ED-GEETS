@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Calendar, Plus, Edit2, Trash2, X, MapPin, Clock } from 'lucide-react'
 import { useAdmin } from '../context/AdminContext.jsx'
 import SimpleEditor from '../components/SimpleEditor.jsx'
@@ -164,6 +164,7 @@ function EditModal({ event, onClose, onSave }) {
 
 export default function AgendaPage() {
   const { isAdmin } = useAdmin()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [events, setEvents] = useState([])
   const [editTarget, setEditTarget] = useState(null)
   const [isCreating, setIsCreating] = useState(false)
@@ -177,6 +178,20 @@ export default function AgendaPage() {
       .then(setEvents)
       .catch(() => {})
   }, [])
+
+  // Ouvre automatiquement l'événement si l'URL contient openId
+  useEffect(() => {
+    const openId = searchParams.get('openId')
+    if (openId && events.length > 0) {
+      const target = events.find((e) => String(e.id) === openId)
+      if (target) {
+        setSelectedEvent(target)
+        const next = new URLSearchParams(searchParams)
+        next.delete('openId')
+        setSearchParams(next, { replace: true })
+      }
+    }
+  }, [searchParams, events, setSearchParams])
 
   const handleCreate = async (form) => {
     const res = await fetch('/api/agenda', {

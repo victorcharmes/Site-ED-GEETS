@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Calendar, Pencil, Trash2, Plus, X, Check } from 'lucide-react'
 import { useAdmin } from '../context/AdminContext'
 
@@ -80,6 +80,7 @@ function NewsForm({ initial = {}, onSave, onCancel, token }) {
 }
 
 function NewsCard({ item, isAdmin, token, onRefresh }) {
+  const navigate = useNavigate()
   const [editing, setEditing] = useState(false)
 
   const handleDelete = async () => {
@@ -104,8 +105,11 @@ function NewsCard({ item, isAdmin, token, onRefresh }) {
 
   return (
     <div className="relative group h-full">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-500 to-teal-800 translate-y-2 translate-x-2 opacity-0 group-hover:opacity-20 transition-all duration-300" />
-      <article className="relative h-full flex flex-col border border-slate-200 bg-white shadow-sm overflow-hidden group-hover:shadow-xl group-hover:-translate-y-2 transition-all duration-500">
+      <div className="absolute inset-0 bg-linear-to-br from-brand-500 to-teal-800 translate-y-2 translate-x-2 opacity-0 group-hover:opacity-20 transition-all duration-300" />
+      <article
+        className="relative h-full flex flex-col border border-slate-200 bg-white shadow-sm overflow-hidden group-hover:shadow-xl group-hover:-translate-y-2 transition-all duration-500 cursor-pointer"
+        onClick={() => navigate(`/actualites?openId=${item.id}`)}
+      >
         <div className="h-48 bg-slate-200 relative overflow-hidden">
           {item.image ? (
             <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -116,7 +120,7 @@ function NewsCard({ item, isAdmin, token, onRefresh }) {
           )}
           {/* Boutons admin */}
           {isAdmin && (
-            <div className="absolute top-2 right-2 flex gap-1">
+            <div className="absolute top-2 right-2 flex gap-1" onClick={(e) => e.stopPropagation()}>
               <button
                 onClick={() => setEditing(true)}
                 className="p-1.5 bg-white/90 hover:bg-brand-700 hover:text-white text-slate-700 shadow transition-colors"
