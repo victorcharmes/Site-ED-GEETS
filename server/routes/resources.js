@@ -109,6 +109,10 @@ router.delete('/:id', requireAuth, (req, res) => {
   const existing = db.prepare('SELECT * FROM resources WHERE id = ?').get(req.params.id)
   if (!existing) return res.status(404).json({ error: 'Not found' })
 
+  if (existing.is_protected) {
+    return res.status(403).json({ error: 'Cannot delete a protected resource' })
+  }
+
   db.prepare('DELETE FROM resources WHERE id = ?').run(req.params.id)
   deleteUploadedFile(existing.url) // nettoyage du fichier si uploadé
 

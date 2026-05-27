@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import {
   FileText, Download, X, Eye, File as FileIcon,
   Pencil, Trash2, Plus, Check, ExternalLink, AlertCircle, Upload, Link as LinkIcon,
@@ -462,6 +462,7 @@ function ResourceFormModal({ resource, onClose, onSave, saving, token }) {
 
 // ── Page principale ─────────────────────────────────────────────────────────
 export default function PhdResourcesPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [resources, setResources] = useState(fallbackResources)
   const [selected, setSelected] = useState(null)   // visualisation
   const [formResource, setFormResource] = useState(null) // null = fermé
@@ -474,9 +475,29 @@ export default function PhdResourcesPage() {
   useEffect(() => {
     fetch('/api/resources')
       .then((r) => r.json())
-      .then((data) => { if (Array.isArray(data) && data.length > 0) setResources(data) })
+      .then((data) => { 
+        if (Array.isArray(data) && data.length > 0) {
+          setResources(data)
+        }
+      })
       .catch(() => {})
   }, [])
+
+  // Ouvre automatiquement la ressource si l'URL contient openId
+  useEffect(() => {
+    const openId = searchParams.get('openId')
+    if (openId && resources.length > 0) {
+      const target = resources.find((r) => String(r.id) === openId)
+      if (target) {
+        setSelected(target)
+        // Nettoyer uniquement openTitle sans perdre les autres paramètres
+        // et sans ajouter une entrée d'historique supplémentaire.
+        const nextSearchParams = new URLSearchParams(searchParams)
+        nextSearchParams.delete('openTitle')
+        setSearchParams(nextSearchParams, { replace: true })
+      }
+    }
+  }, [searchParams, resources, setSearchParams])
 
   // ── Sauvegarde (create ou update) ──────────────────────────────────────
   const handleSave = async (data) => {
@@ -570,14 +591,16 @@ export default function PhdResourcesPage() {
                       >
                         <Pencil className="w-3.5 h-3.5" />
                       </button>
-                      <button
-                        onClick={() => handleDelete(r.id)}
-                        disabled={deletingId === r.id}
-                        className="p-1.5 rounded-none bg-white border border-slate-200 text-slate-500 hover:border-red-300 hover:text-red-600 shadow-sm disabled:opacity-50"
-                        title="Supprimer"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
+                      {!r.is_protected && (
+                        <button
+                          onClick={() => handleDelete(r.id)}
+                          disabled={deletingId === r.id}
+                          className="p-1.5 rounded-none bg-white border border-slate-200 text-slate-500 hover:border-red-300 hover:text-red-600 shadow-sm disabled:opacity-50"
+                          title="Supprimer"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      )}
                     </div>
                   )}
 

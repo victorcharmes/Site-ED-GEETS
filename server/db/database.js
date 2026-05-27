@@ -10,6 +10,18 @@ const db = new Database(join(__dirname, 'geets.sqlite'))
 
 db.pragma('journal_mode = WAL')
 db.exec(schema)
+
+// Migration pour ajouter is_protected si la table existait avant
+const tableInfo = db.pragma('table_info(resources)')
+const hasIsProtected = tableInfo.some(column => column.name === 'is_protected')
+if (!hasIsProtected) {
+  try {
+    db.exec('ALTER TABLE resources ADD COLUMN is_protected INTEGER NOT NULL DEFAULT 0')
+  } catch (e) {
+    throw new Error(`Migration 'is_protected' failed: ${e.message}`)
+  }
+}
+
 seed(db)
 
 export default db
