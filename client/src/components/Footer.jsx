@@ -94,6 +94,33 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Contributeurs */}
+        <div className="pt-10 pb-10 border-t border-slate-800">
+          <h4 className="text-slate-400 text-sm font-semibold mb-3 uppercase tracking-wider">Contributeurs</h4>
+          <p className="text-sm text-slate-500 mb-5 max-w-2xl">
+            Ce site a été réalisé par des étudiants en L3 Informatique à l'Université de Toulouse,
+            dans le cadre de leur projet de fin de licence, sous la supervision de{' '}
+            <span className="text-slate-400 font-medium">Bruno Roussel</span>, professeur encadrant.
+          </p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+            {[
+              'Cédric Roussel',
+              'Aurélien Janet',
+              'Victor Charmes',
+              'Eliott Boulanger',
+              'Lucas Gorgues',
+              'Alban Gilles',
+              'Anthony Piquemal',
+              'Raffael Dwyyana',
+              'TRAN Bui Xuan Vinh',
+            ].map((name) => (
+              <li key={name} className="text-sm text-slate-400">
+                {name}
+              </li>
+            ))}
+          </ul>
+        </div>
+
         {/* Bas de page */}
         <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
           <p>&copy; 2026 Université de Toulouse — École Doctorale GEETS.</p>
