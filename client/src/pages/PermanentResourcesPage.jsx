@@ -475,9 +475,26 @@ export default function PermanentResourcesPage() {
   useEffect(() => {
     fetch('/api/permanent-resources')
       .then((r) => r.json())
-      .then((data) => { if (Array.isArray(data) && data.length > 0) setResources(data) })
+      .then((data) => { 
+        if (Array.isArray(data) && data.length > 0) {
+          setResources(data)
+        }
+      })
       .catch(() => {})
   }, [])
+
+  // Ouvre automatiquement la ressource si l'URL contient openTitle
+  useEffect(() => {
+    const openTitle = searchParams.get('openTitle')
+    if (openTitle && resources.length > 0) {
+      const target = resources.find((r) => r.title === openTitle)
+      if (target) {
+        setSelected(target)
+        // Nettoyer l'URL pour ne pas réouvrir à chaque rechargement
+        setSearchParams({})
+      }
+    }
+  }, [searchParams, resources, setSearchParams])
 
   // Ouvre automatiquement la ressource si l'URL contient openTitle
   useEffect(() => {
@@ -586,14 +603,16 @@ export default function PermanentResourcesPage() {
                       >
                         <Pencil className="w-3.5 h-3.5" />
                       </button>
-                      <button
-                        onClick={() => handleDelete(r.id)}
-                        disabled={deletingId === r.id}
-                        className="p-1.5 rounded-none bg-white border border-slate-200 text-slate-500 hover:border-red-300 hover:text-red-600 shadow-sm disabled:opacity-50"
-                        title="Supprimer"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </button>
+                      {!r.is_protected && (
+                        <button
+                          onClick={() => handleDelete(r.id)}
+                          disabled={deletingId === r.id}
+                          className="p-1.5 rounded-none bg-white border border-slate-200 text-slate-500 hover:border-red-300 hover:text-red-600 shadow-sm disabled:opacity-50"
+                          title="Supprimer"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      )}
                     </div>
                   )}
 

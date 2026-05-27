@@ -21,7 +21,15 @@ if (!hasIsProtected) {
     throw new Error(`Migration 'is_protected' failed: ${e.message}`)
   }
 }
-
+const tableInfoPerm = db.pragma('table_info(permanent_resources)')
+const hasIsProtectedPerm = tableInfoPerm.some(column => column.name === 'is_protected')
+if (!hasIsProtectedPerm) {
+  try {
+    db.exec('ALTER TABLE permanent_resources ADD COLUMN is_protected INTEGER NOT NULL DEFAULT 0')
+  } catch (e) {
+    console.error("Migration 'is_protected' for permanent_resources failed:", e)
+  }
+}
 seed(db)
 
 export default db

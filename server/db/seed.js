@@ -262,6 +262,53 @@ export function seed(db) {
     insertFaqQ.run(cat2.lastInsertRowid, "Comment organiser une soutenance en tant que directeur ?", "Le directeur de thèse propose les rapporteurs et la composition du jury dans l'espace ADUM du doctorant. Assurez-vous que les règles de parité et de proportion de membres extérieurs sont respectées.", 2)
   })
 
+  const seedProtectedPermanentResources = db.transaction(() => {
+    const insertPermResource = db.prepare(
+      'INSERT INTO permanent_resources (title, category, type, date, size, url, content, is_protected) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+    )
+
+    const protectedPermResources = [
+      { 
+        title: 'Obtenir son HDR', 
+        category: 'HDR',
+        content: "Procédures et dossiers pour l'Habilitation à Diriger des Recherches."
+      },
+      { 
+        title: 'Direction de thèse', 
+        category: 'Direction',
+        content: "Règles, dérogations temporaires et co-tutelles."
+      },
+      { 
+        title: 'Soutenances & Jurys', 
+        category: 'Soutenance',
+        content: "Organisation, composition des jurys de thèses et documents nécessaires."
+      },
+      { 
+        title: 'Proposer un sujet', 
+        category: 'Sujets',
+        content: "Modalités de proposition de sujets de thèse sur ADUM."
+      }
+    ]
+
+    for (const res of protectedPermResources) {
+      const existsRow = db.prepare('SELECT 1 FROM permanent_resources WHERE title = ?').get(res.title);
+      if (!existsRow) {
+        insertPermResource.run(
+          res.title,
+          res.category,
+          'texte',
+          new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' }),
+          '1 KB',
+          '',
+          res.content,
+          1 // is_protected
+        )
+      } else {
+        db.prepare('UPDATE permanent_resources SET is_protected = 1 WHERE title = ?').run(res.title)
+      }
+    }
+  })
+
   if (newsCount.count === 0) seedNews()
   if (agendaCount.count === 0) seedAgenda()
   if (statsCount.count === 0) seedStats()
@@ -270,4 +317,5 @@ export function seed(db) {
   if (faqCount.count === 0) seedFaq()
 
   seedProtectedResources()
+  seedProtectedPermanentResources()
 }
