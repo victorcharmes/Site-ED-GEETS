@@ -228,7 +228,7 @@ export function seed(db) {
           res.title,
           res.category,
           'texte', // par defaut texte, modifiable ensuite
-          new Date().toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' }),
+          'janvier 2024',
           '1 KB',
           '',
           res.content,
