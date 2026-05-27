@@ -80,15 +80,15 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
-                  Politique de confidentialité
-                </a>
+                <Link to="/rgpd" className="text-sm font-medium text-slate-300 hover:text-white transition-colors">
+                  Informations RGPD
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm font-medium text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                <Link to="/accessibilite" className="text-sm font-medium text-slate-300 hover:text-white transition-colors flex items-center gap-2">
                   Déclaration d'accessibilité (RGAA)
                   <span className="w-2 h-2 rounded-full bg-yellow-500 flex-shrink-0" title="Statut RGAA : Partiellement conforme" />
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
