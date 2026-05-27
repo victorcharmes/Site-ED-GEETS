@@ -18,7 +18,7 @@ if (!hasIsProtected) {
   try {
     db.exec('ALTER TABLE resources ADD COLUMN is_protected INTEGER NOT NULL DEFAULT 0')
   } catch (e) {
-    console.error("Migration 'is_protected' failed:", e)
+    throw new Error(`Migration 'is_protected' failed: ${e.message}`)
   }
 }
 
