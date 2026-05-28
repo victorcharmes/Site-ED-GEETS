@@ -30,10 +30,33 @@ export default function SearchModal({ isOpen, onClose }) {
     else { setQuery(''); setResults([]) }
   }, [isOpen])
 
-  // Raccourcis clavier
+  // Focus trap et raccourcis clavier
   useEffect(() => {
     const handler = (e) => {
-      if (e.key === 'Escape' && isOpen) onClose()
+      const modal = document.getElementById('search-modal-dialog')
+      
+      if (e.key === 'Escape' && isOpen) {
+        onClose()
+        return
+      }
+
+      if (e.key === 'Tab' && isOpen && modal) {
+        const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+        const firstElement = focusableElements[0]
+        const lastElement = focusableElements[focusableElements.length - 1]
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            lastElement.focus()
+            e.preventDefault()
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            firstElement.focus()
+            e.preventDefault()
+          }
+        }
+      }
     }
     window.addEventListener('keydown', handler)
     return () => window.removeEventListener('keydown', handler)
@@ -75,6 +98,7 @@ export default function SearchModal({ isOpen, onClose }) {
 
       {/* Modale */}
       <div
+        id="search-modal-dialog"
         className={`fixed top-4 sm:top-24 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-white shadow-2xl border border-slate-200 overflow-hidden transform transition-all duration-300 z-60 ${isOpen ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none -translate-y-8'}`}
         role="dialog"
         aria-modal="true"

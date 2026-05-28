@@ -87,7 +87,7 @@ export default function Header({ onOpenSearch }) {
           <div className="flex justify-between items-center h-20 relative">
 
             {/* Logo */}
-            <Link to="/" className="flex-shrink-0 flex items-center gap-3">
+            <Link to="/" className="shrink-0 flex items-center gap-3">
               <div className="w-10 h-10 bg-brand-700 flex items-center justify-center shadow-md overflow-hidden p-0.5">
                 <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvYA-E9F_0m_v0jV_xDPCSOARdTGimGNXjMQ&s"
@@ -121,6 +121,7 @@ export default function Header({ onOpenSearch }) {
                   ) : (
                     <Link
                       to={item.href}
+                      aria-haspopup={item.subItems.length > 0 ? "true" : undefined}
                       className={`flex items-center gap-1 font-medium transition-colors border-b-2 border-transparent py-2 ${
                         item.isHighlight
                           ? 'text-brand-700 font-bold hover:border-brand-700'
@@ -135,7 +136,7 @@ export default function Header({ onOpenSearch }) {
                   )}
 
                   {item.subItems.length > 0 && (
-                    <div className="absolute left-0 top-full pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 z-50">
+                    <div className="absolute left-0 top-full pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 group-focus-within:translate-y-0 z-50">
                       <div className="bg-white shadow-xl border border-slate-100 overflow-hidden py-2">
                         {item.subItems.map((subItem, subIndex) => (
                           <Link
@@ -154,7 +155,7 @@ export default function Header({ onOpenSearch }) {
             </nav>
 
             {/* Actions desktop */}
-            <div className="flex-shrink-0 flex items-center space-x-2">
+            <div className="shrink-0 flex items-center space-x-2">
               <div className="hidden md:flex items-center space-x-2">
                 {isAdmin && (
                   <button
