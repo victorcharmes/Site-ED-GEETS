@@ -27,7 +27,7 @@ const items = [
     icon: Briefcase,
     title: 'Ressources Permanents',
     desc: 'Informations et démarches pour les directeurs de thèse et les personnels de laboratoire.',
-    href: '#permanents',
+    href: '/ressources-permanents',
     isLink: false,
   },
 ]
@@ -48,7 +48,7 @@ function Card({ icon: Icon, title, desc, to, href, isLink }) {
 
   return (
     <div className="relative group h-full">
-      <div className="absolute inset-0 bg-gradient-to-br from-brand-500 to-teal-800 translate-y-2 translate-x-2 opacity-0 group-hover:opacity-20 transition-all duration-300" />
+      <div className="absolute inset-0 bg-linear-to-br from-brand-500 to-teal-800 translate-y-2 translate-x-2 opacity-0 group-hover:opacity-20 transition-all duration-300" />
       {isLink ? (
         <Link to={to} className={className}>{inner}</Link>
       ) : (
