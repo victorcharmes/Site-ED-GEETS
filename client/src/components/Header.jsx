@@ -25,7 +25,6 @@ const navItems = [
     subItems: [
       { title: 'Actualités', href: '/actualites' },
       { title: 'Agenda', href: '/agenda' },
-      { title: 'Congrès', href: '/#' },
     ],
   },
   {
@@ -42,17 +41,19 @@ const navItems = [
     subItems: [
       { title: 'Hub Doctorant', href: '/#doctorants' },
       { title: 'Hub Permanent', href: '/#permanents' },
-      { title: 'Déposer thèse', href: '/#' },
       { title: 'FAQ', href: '/faq' },
     ],
   },
   {
     title: 'ADUM',
     href: 'https://doctorat.univ-toulouse.fr/index.pl',
+    target: "_blank",
+    rel: "noopener noreferrer",
     isHighlight: true,
     subItems: [],
   },
 ]
+
 
 export default function Header({ onOpenSearch }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -110,6 +111,8 @@ export default function Header({ onOpenSearch }) {
                   {isExternalLink(item.href) ? (
                     <a
                       href={item.href}
+                      target={item.target}
+                      rel={item.rel}
                       className={`flex items-center gap-1 font-medium transition-colors border-b-2 border-transparent py-2 ${
                         item.isHighlight
                           ? 'text-brand-700 font-bold hover:border-brand-700'
@@ -243,6 +246,8 @@ export default function Header({ onOpenSearch }) {
                   {isExternalLink(item.href) ? (
                     <a
                       href={item.href}
+                      target={item.target}
+                      rel={item.rel}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={`block px-3 py-3 text-base ${
                         item.isHighlight
