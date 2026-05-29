@@ -46,7 +46,7 @@ const navItems = [
   },
   {
     title: 'ADUM',
-    href: 'https://doctorat.univ-toulouse.fr/index.pl',
+    href: 'https://adum.fr/identification.pl?menu_transparent=oui&site=GEET&redirection=maj',
     target: "_blank",
     rel: "noopener noreferrer",
     isHighlight: true,
