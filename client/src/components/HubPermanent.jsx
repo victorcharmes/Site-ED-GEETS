@@ -30,7 +30,7 @@ export default function HubPermanent() {
             </p>
             <div className="flex flex-col gap-3 items-start">
               <a
-                href="https://doctorat.univ-toulouse.fr/index.pl"
+                href="https://adum.fr/identification.pl?menu_transparent=oui&site=GEET&redirection=maj"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center px-6 py-3 bg-white text-brand-900 font-bold hover:bg-brand-50 transition-colors shadow-lg focus-visible:ring-2 focus-visible:ring-white"
