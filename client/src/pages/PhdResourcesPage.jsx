@@ -5,6 +5,7 @@ import {
   Pencil, Trash2, Plus, Check, ExternalLink, AlertCircle, Upload, Link as LinkIcon,
 } from 'lucide-react'
 import { useAdmin } from '../context/AdminContext'
+import { useEditableText } from '../hooks/useEditableText'
 
 // ── Catégories suggérées ────────────────────────────────────────────────────
 const CATEGORIES = ['Réglementation', 'Soutenance', 'Suivi', 'Inscription', 'Formation', 'Général']
@@ -469,6 +470,7 @@ export default function PhdResourcesPage() {
   const [saving, setSaving] = useState(false)
   const [deletingId, setDeletingId] = useState(null)
   const { isAdmin, token } = useAdmin()
+  const phdHeader = useEditableText('phd_resources_page_header', "Consultez l'ensemble des fiches, documents et formulaires nécessaires au déroulement de votre projet de thèse.")
 
   useEffect(() => { window.scrollTo(0, 0) }, [])
 
@@ -552,9 +554,33 @@ export default function PhdResourcesPage() {
               <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-6 tracking-tight">
                 Ressources Doctorants
               </h1>
-              <p className="text-xl text-univ-100 leading-relaxed max-w-2xl">
-                Consultez l'ensemble des fiches, documents et formulaires nécessaires au déroulement de votre projet de thèse.
-              </p>
+              {phdHeader.editing ? (
+                <div className="mt-1">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-univ-200 mb-2">Édition admin</p>
+                  <textarea value={phdHeader.editValue} onChange={e => phdHeader.setEditValue(e.target.value)} rows={2}
+                    className="w-full max-w-2xl px-4 py-3 text-slate-900 bg-white text-sm outline-none focus:ring-2 focus:ring-white/50 resize-none" />
+                  <div className="flex gap-3 mt-2">
+                    <button onClick={phdHeader.save} disabled={phdHeader.saving}
+                      className="inline-flex items-center gap-1.5 bg-white px-4 py-2 text-xs font-semibold text-slate-900 hover:bg-slate-100 disabled:opacity-50 transition-colors">
+                      <Check className="h-3.5 w-3.5" />{phdHeader.saving ? 'Enregistrement...' : 'Enregistrer'}
+                    </button>
+                    <button onClick={phdHeader.cancelEdit}
+                      className="inline-flex items-center gap-1.5 border border-white/40 px-4 py-2 text-xs font-semibold text-white hover:bg-white/10 transition-colors">
+                      <X className="h-3.5 w-3.5" />Annuler
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-start gap-3">
+                  <p className="text-xl text-univ-100 leading-relaxed max-w-2xl">{phdHeader.text}</p>
+                  {isAdmin && (
+                    <button onClick={phdHeader.startEdit}
+                      className="inline-flex items-center gap-1.5 border border-white/40 px-3 py-1.5 text-xs font-semibold text-white hover:bg-white/10 transition-colors shrink-0">
+                      <Pencil className="h-3.5 w-3.5" />Modifier
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
             {isAdmin && (
               <button
