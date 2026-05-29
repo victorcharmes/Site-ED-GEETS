@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, FileText, Calendar, BookOpen, GraduationCap } from 'lucide-react'
+import { ArrowRight, FileText, Calendar, BookOpen, GraduationCap, Pencil, Check, X } from 'lucide-react'
+import { useAdmin } from '../context/AdminContext'
+import { useEditableText } from '../hooks/useEditableText'
 
 const cards = [
   { icon: FileText, title: 'Inscription & Réinscription', desc: 'Procédures internes et conventions.' },
@@ -9,6 +11,9 @@ const cards = [
 ]
 
 export default function Hub() {
+  const { isAdmin } = useAdmin()
+  const hubSubtitle = useEditableText('hub_doctorant_subtitle', "Retrouvez les guides administratifs de l'ED et accédez au réseau national pour gérer votre dossier, vos formations et votre CSI.")
+
   return (
     <section id="doctorants" className="py-24 bg-univ-900 text-white relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -23,10 +28,35 @@ export default function Hub() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5">
             <h2 className="text-3xl font-extrabold sm:text-4xl mb-6 tracking-tight">Hub Doctorant</h2>
-            <p className="text-lg text-univ-200 mb-8 leading-relaxed">
-              Retrouvez les guides administratifs de l'ED et accédez au réseau national pour gérer votre
-              dossier, vos formations et votre CSI.
-            </p>
+
+            {hubSubtitle.editing ? (
+              <div className="mb-8">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-univ-300 mb-2">Édition admin</p>
+                <textarea value={hubSubtitle.editValue} onChange={e => hubSubtitle.setEditValue(e.target.value)} rows={3}
+                  className="w-full px-4 py-3 text-slate-900 bg-white text-sm outline-none focus:ring-2 focus:ring-white/50 resize-none" />
+                <div className="flex gap-3 mt-2">
+                  <button onClick={hubSubtitle.save} disabled={hubSubtitle.saving}
+                    className="inline-flex items-center gap-1.5 bg-white px-4 py-2 text-xs font-semibold text-slate-900 hover:bg-slate-100 disabled:opacity-50 transition-colors">
+                    <Check className="h-3.5 w-3.5" />{hubSubtitle.saving ? 'Enregistrement...' : 'Enregistrer'}
+                  </button>
+                  <button onClick={hubSubtitle.cancelEdit}
+                    className="inline-flex items-center gap-1.5 border border-white/40 px-4 py-2 text-xs font-semibold text-white hover:bg-white/10 transition-colors">
+                    <X className="h-3.5 w-3.5" />Annuler
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-start gap-3 mb-8">
+                <p className="text-lg text-univ-200 leading-relaxed">{hubSubtitle.text}</p>
+                {isAdmin && (
+                  <button onClick={hubSubtitle.startEdit}
+                    className="inline-flex items-center gap-1 border border-white/30 px-3 py-1 text-xs font-semibold text-white hover:bg-white/10 transition-colors shrink-0 mt-1">
+                    <Pencil className="h-3.5 w-3.5" />Modifier
+                  </button>
+                )}
+              </div>
+            )}
+
             <div className="flex flex-col gap-3 items-start">
               <a
                 href="https://adum.fr/identification.pl?menu_transparent=oui&site=GEET&redirection=maj"

@@ -121,10 +121,18 @@ export default function Header({ onOpenSearch }) {
                     >
                       {item.title}
                     </a>
+                  ) : item.subItems.length > 0 ? (
+                    <button
+                      type="button"
+                      aria-haspopup="true"
+                      className="flex items-center gap-1 font-medium transition-colors border-b-2 border-transparent py-2 text-slate-700 hover:text-brand-700 hover:border-brand-700 cursor-default select-none"
+                    >
+                      {item.title}
+                      <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-brand-700 transition-transform group-hover:rotate-180" />
+                    </button>
                   ) : (
                     <Link
                       to={item.href}
-                      aria-haspopup={item.subItems.length > 0 ? "true" : undefined}
                       className={`flex items-center gap-1 font-medium transition-colors border-b-2 border-transparent py-2 ${
                         item.isHighlight
                           ? 'text-brand-700 font-bold hover:border-brand-700'
@@ -132,14 +140,11 @@ export default function Header({ onOpenSearch }) {
                       }`}
                     >
                       {item.title}
-                      {item.subItems.length > 0 && (
-                        <ChevronDown className="w-4 h-4 text-slate-400 group-hover:text-brand-700 transition-transform group-hover:rotate-180" />
-                      )}
                     </Link>
                   )}
 
                   {item.subItems.length > 0 && (
-                    <div className="absolute left-0 top-full pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible group-focus-within:opacity-100 group-focus-within:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 group-focus-within:translate-y-0 z-50">
+                    <div className="absolute left-0 top-full pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 z-50">
                       <div className="bg-white shadow-xl border border-slate-100 overflow-hidden py-2">
                         {item.subItems.map((subItem, subIndex) => (
                           <Link
@@ -257,6 +262,10 @@ export default function Header({ onOpenSearch }) {
                     >
                       {item.title}
                     </a>
+                  ) : item.subItems.length > 0 ? (
+                    <span className="block px-3 py-3 text-base font-medium text-slate-800 select-none">
+                      {item.title}
+                    </span>
                   ) : (
                     <Link
                       to={item.href}

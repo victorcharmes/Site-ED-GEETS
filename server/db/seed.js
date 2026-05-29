@@ -309,12 +309,60 @@ export function seed(db) {
     }
   })
 
+  const insertSiteText = db.prepare(
+    'INSERT OR IGNORE INTO site_texts (key, value) VALUES (?, ?)'
+  )
+
+  const seedSiteTexts = db.transaction(() => {
+    insertSiteText.run(
+      'labs_page_header',
+      "Découvrez les 13 unités de recherche de l'ED GEETS, intégrées dans les pôles de compétitivité AESE et CBS."
+    )
+    insertSiteText.run(
+      'labs_section_subtitle',
+      "Les doctorants du GEETS sont intégrés au sein d'unités de recherche de pointe, bénéficiant d'infrastructures de niveau international."
+    )
+    insertSiteText.run(
+      'news_page_header',
+      "Suivez toutes les dernières informations concernant la vie de l'École Doctorale."
+    )
+    insertSiteText.run(
+      'agenda_page_header',
+      "Découvrez les événements à venir, les soutenances et les dates importantes de l'ED GEETS."
+    )
+    insertSiteText.run(
+      'phd_resources_page_header',
+      "Consultez l'ensemble des fiches, documents et formulaires nécessaires au déroulement de votre projet de thèse."
+    )
+    insertSiteText.run(
+      'permanent_resources_page_header',
+      "Consultez l'ensemble des fiches, documents et formulaires à destination du personnel permanent de l'école doctorale."
+    )
+    insertSiteText.run(
+      'hub_doctorant_subtitle',
+      "Retrouvez les guides administratifs de l'ED et accédez au réseau national pour gérer votre dossier, vos formations et votre CSI."
+    )
+    insertSiteText.run(
+      'hub_permanent_subtitle',
+      "Vos informations concernant l'Habilitation à Diriger des Recherches, les demandes d'encadrement, et la participation aux jurys et comités de suivi."
+    )
+    insertSiteText.run(
+      'essential_info_subtitle',
+      "Retrouvez rapidement les documents, contacts et réponses à vos questions les plus fréquentes."
+    )
+    insertSiteText.run(
+      'faq_page_header',
+      "Retrouvez les réponses aux questions les plus fréquentes concernant le déroulement de votre thèse à l'ED GEETS."
+    )
+  })
+
   if (newsCount.count === 0) seedNews()
   if (agendaCount.count === 0) seedAgenda()
   if (statsCount.count === 0) seedStats()
   if (aboutCount.count === 0) seedAbout()
   if (resourcesCount.count === 0) seedResources()
   if (faqCount.count === 0) seedFaq()
+  seedSiteTexts()
 
   seedProtectedResources()
   seedProtectedPermanentResources()

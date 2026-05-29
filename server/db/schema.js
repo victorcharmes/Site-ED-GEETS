@@ -79,4 +79,8 @@ export const schema = `
     position INTEGER NOT NULL DEFAULT 0,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   );
+  CREATE TABLE IF NOT EXISTS site_texts (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL DEFAULT ''
+  );
 `
