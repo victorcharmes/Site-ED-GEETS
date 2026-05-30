@@ -68,4 +68,81 @@
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-.daltonien-mode { filter: contrast(135%) saturate(120%); }
+.daltonien-mode {
+  filter: none;
+  color-scheme: dark;
+  background-color: #000;
+}
+
+.daltonien-mode body {
+  background-color: #000;
+  color: #fff;
+}
+
+.daltonien-mode [class*="bg-slate-"],
+.daltonien-mode [class*="bg-univ-"],
+.daltonien-mode [class*="bg-brand-"],
+.daltonien-mode [class*="bg-white"] {
+  background-color: #000;
+}
+
+.daltonien-mode [class*="text-slate-"],
+.daltonien-mode [class*="text-univ-"],
+.daltonien-mode [class*="text-brand-"] {
+  color: #fff;
+}
+
+.daltonien-mode a,
+.daltonien-mode a[class*="text-"],
+.daltonien-mode a * {
+  color: #ffd400;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.daltonien-mode [class*="border-slate-"],
+.daltonien-mode [class*="border-univ-"],
+.daltonien-mode [class*="border-brand-"],
+.daltonien-mode .border {
+  border-color: #fff;
+}
+
+.daltonien-mode button,
+.daltonien-mode [role="button"],
+.daltonien-mode input,
+.daltonien-mode select,
+.daltonien-mode textarea {
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+}
+
+.daltonien-mode button:hover,
+.daltonien-mode [role="button"]:hover,
+.daltonien-mode button:focus-visible,
+.daltonien-mode [role="button"]:focus-visible {
+  background-color: #000;
+  color: #ffd400;
+  border-color: #ffd400;
+}
+
+.daltonien-mode ::placeholder {
+  color: #e5e5e5;
+}
+
+.daltonien-mode :focus-visible {
+  outline: 3px solid #ffd400;
+  outline-offset: 3px;
+}
+
+.daltonien-mode .shadow-xl,
+.daltonien-mode .shadow-lg,
+.daltonien-mode .shadow-md,
+.daltonien-mode .shadow-sm {
+  box-shadow: none;
+}
+
+.daltonien-mode .h-px {
+  background-color: #fff;
+}
