@@ -77,6 +77,24 @@ npm run dev
 | PUT | `/api/agenda/:id` | Modifier un événement |
 | DELETE | `/api/agenda/:id` | Supprimer un événement |
 | GET | `/api/health` | Statut du serveur |
+| POST | `/api/auth/login` | Connexion admin → retourne un JWT |
+| GET | `/api/auth/me` | Vérifie la validité du token JWT |
+| POST | `/api/auth/change-password` | Changer le mot de passe avec l'ancien (sans JWT) |
+| POST | `/api/auth/reset-password` | Changer le mot de passe depuis une session active (JWT requis) |
+
+## Authentification admin
+
+L'accès admin se fait via `/admin`. Les identifiants par défaut sont définis dans le `.env` (`ADMIN_USERNAME`, `ADMIN_PASSWORD`).
+
+### Changer le mot de passe
+
+Deux scénarios sont possibles :
+
+**Sans être connecté** — depuis la page `/admin`, cliquer sur "Changer le mot de passe" sous le formulaire de login. Renseigner le nom d'utilisateur, l'ancien mot de passe, et le nouveau mot de passe. Aucun JWT requis, l'ancien mot de passe suffit à s'authentifier.
+
+**Une fois connecté** — la section "Réinitialiser le mot de passe" apparaît en bas de la page admin. Elle requiert le mot de passe actuel et le nouveau mot de passe. La requête est authentifiée via JWT.
+
+Dans les deux cas, le nouveau mot de passe doit faire au moins 6 caractères.
 
 ## Build production
 
