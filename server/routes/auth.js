@@ -2,6 +2,7 @@ import { Router } from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import db from '../db/database.js'
+import { requireAuth } from '../middleware/auth.js'
 
 const router = Router()
 
@@ -36,6 +37,28 @@ router.get('/me', (req, res) => {
   } catch {
     res.status(401).json({ error: 'Token invalide' })
   }
+})
+
+// POST /api/auth/reset-password
+router.post('/reset-password', requireAuth, (req, res) => {
+  const { currentPassword, newPassword } = req.body
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ error: 'Mot de passe actuel et nouveau requis' })
+  }
+  if (newPassword.length < 6) {
+    return res.status(400).json({ error: 'Le nouveau mot de passe est trop court' })
+  }
+
+  const admin = db.prepare('SELECT * FROM admins WHERE id = ?').get(req.admin.id)
+  if (!admin) return res.status(404).json({ error: 'Admin introuvable' })
+
+  const valid = bcrypt.compareSync(currentPassword, admin.password)
+  if (!valid) return res.status(401).json({ error: 'Mot de passe actuel incorrect' })
+
+  const hashed = bcrypt.hashSync(newPassword, 10)
+  db.prepare('UPDATE admins SET password = ? WHERE id = ?').run(hashed, admin.id)
+
+  res.json({ ok: true })
 })
 
 export default router
