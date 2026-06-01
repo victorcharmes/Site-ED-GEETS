@@ -39,6 +39,27 @@ router.get('/me', (req, res) => {
   }
 })
 
+// POST /api/auth/change-password — accessible sans JWT, avec l'ancien mdp
+router.post('/change-password', (req, res) => {
+  const { username, oldPassword, newPassword } = req.body
+  if (!username || !oldPassword || !newPassword) {
+    return res.status(400).json({ error: 'Tous les champs sont requis' })
+  }
+  if (newPassword.length < 6) {
+    return res.status(400).json({ error: 'Le nouveau mot de passe est trop court (6 caractères minimum)' })
+  }
+
+  const admin = db.prepare('SELECT * FROM admins WHERE username = ?').get(username)
+  if (!admin || !bcrypt.compareSync(oldPassword, admin.password)) {
+    return res.status(401).json({ error: 'Identifiants incorrects' })
+  }
+
+  const hashed = bcrypt.hashSync(newPassword, 10)
+  db.prepare('UPDATE admins SET password = ? WHERE id = ?').run(hashed, admin.id)
+
+  res.json({ ok: true })
+})
+
 // POST /api/auth/reset-password
 router.post('/reset-password', requireAuth, (req, res) => {
   const { currentPassword, newPassword } = req.body

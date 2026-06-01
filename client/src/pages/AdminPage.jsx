@@ -15,6 +15,14 @@ export default function AdminPage() {
   const [resetError, setResetError] = useState('')
   const [resetSuccess, setResetSuccess] = useState('')
   const [resetLoading, setResetLoading] = useState(false)
+  const [showChangeForm, setShowChangeForm] = useState(false)
+  const [changeUsername, setChangeUsername] = useState('')
+  const [changeOldPassword, setChangeOldPassword] = useState('')
+  const [changeNewPassword, setChangeNewPassword] = useState('')
+  const [changeConfirmPassword, setChangeConfirmPassword] = useState('')
+  const [changeError, setChangeError] = useState('')
+  const [changeSuccess, setChangeSuccess] = useState('')
+  const [changeLoading, setChangeLoading] = useState(false)
   const navigate = useNavigate()
 
   const handleLogin = async (e) => {
@@ -70,6 +78,45 @@ export default function AdminPage() {
       setResetError(err.message)
     } finally {
       setResetLoading(false)
+    }
+  }
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault()
+    setChangeError('')
+    setChangeSuccess('')
+
+    if (changeNewPassword !== changeConfirmPassword) {
+      setChangeError('Les nouveaux mots de passe ne correspondent pas.')
+      return
+    }
+
+    setChangeLoading(true)
+    try {
+      const res = await fetch('/api/auth/change-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: changeUsername,
+          oldPassword: changeOldPassword,
+          newPassword: changeNewPassword,
+        }),
+      })
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}))
+        throw new Error(err.error ?? 'Erreur lors du changement de mot de passe')
+      }
+
+      setChangeUsername('')
+      setChangeOldPassword('')
+      setChangeNewPassword('')
+      setChangeConfirmPassword('')
+      setChangeSuccess('Mot de passe mis à jour. Vous pouvez maintenant vous connecter.')
+    } catch (err) {
+      setChangeError(err.message)
+    } finally {
+      setChangeLoading(false)
     }
   }
 
@@ -241,6 +288,86 @@ export default function AdminPage() {
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
         </form>
+
+        <div className="mt-6 pt-5 border-t border-slate-200">
+          <button
+            type="button"
+            onClick={() => { setShowChangeForm(v => !v); setChangeError(''); setChangeSuccess('') }}
+            className="text-sm text-slate-500 hover:text-slate-700 underline underline-offset-2"
+          >
+            {showChangeForm ? 'Annuler' : 'Changer le mot de passe'}
+          </button>
+
+          {showChangeForm && (
+            <form onSubmit={handleChangePassword} className="mt-4 space-y-3">
+              {changeError && (
+                <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 text-red-700 text-sm">
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  {changeError}
+                </div>
+              )}
+              {changeSuccess && (
+                <div className="p-3 bg-green-50 border border-green-200 text-green-700 text-sm">
+                  {changeSuccess}
+                </div>
+              )}
+
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <input
+                  type="text"
+                  value={changeUsername}
+                  onChange={(e) => setChangeUsername(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
+                  placeholder="Nom d'utilisateur"
+                  required
+                />
+              </div>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <input
+                  type="password"
+                  value={changeOldPassword}
+                  onChange={(e) => setChangeOldPassword(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
+                  placeholder="Ancien mot de passe"
+                  required
+                />
+              </div>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <input
+                  type="password"
+                  value={changeNewPassword}
+                  onChange={(e) => setChangeNewPassword(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
+                  placeholder="Nouveau mot de passe"
+                  required
+                  minLength={6}
+                />
+              </div>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <input
+                  type="password"
+                  value={changeConfirmPassword}
+                  onChange={(e) => setChangeConfirmPassword(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
+                  placeholder="Confirmer le nouveau mot de passe"
+                  required
+                  minLength={6}
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={changeLoading}
+                className="w-full py-3 bg-slate-900 text-white font-semibold hover:bg-slate-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {changeLoading ? 'Mise à jour...' : 'Mettre à jour le mot de passe'}
+              </button>
+            </form>
+          )}
+        </div>
       </div>
     </div>
   )
