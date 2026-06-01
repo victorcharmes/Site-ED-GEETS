@@ -185,9 +185,6 @@ export default function Header({ onOpenSearch }) {
                 >
                   <Search className="w-5 h-5" />
                   Recherche
-                  <span className="hidden lg:flex items-center ml-1 px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 bg-white border border-slate-200 shadow-sm">
-                    Ctrl K
-                  </span>
                 </button>
 
                 {/* Sélecteur de langue desktop */}
