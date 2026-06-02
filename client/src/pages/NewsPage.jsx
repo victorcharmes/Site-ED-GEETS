@@ -24,9 +24,15 @@ function NewsModal({ item, onClose }) {
         >
           <X className="w-6 h-6" />
         </button>
-        <div className="aspect-[21/9] bg-slate-200 overflow-hidden">
-          <img src={item.image || DEFAULT_IMAGE} alt={item.title} className="w-full h-full object-cover" />
-        </div>
+        {item.image ? (
+          <div className="aspect-[21/9] bg-slate-200 overflow-hidden">
+            <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+          </div>
+        ) : (
+          <div className="aspect-[21/9] bg-brand-50 flex items-center justify-center text-brand-700">
+            <FileText className="w-16 h-16" />
+          </div>
+        )}
         <div className="p-6 md:p-10">
           <div className="flex items-center gap-4 mb-6">
             <span className="bg-brand-50 text-brand-700 text-xs font-bold uppercase tracking-wider px-3 py-1 border border-brand-100">
@@ -282,11 +288,17 @@ export default function NewsPage() {
                     </div>
                   )}
                   <div className="h-48 bg-slate-200 overflow-hidden">
-                    <img
-                      src={item.image || DEFAULT_IMAGE}
-                      alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-brand-50 text-brand-700">
+                        <FileText className="w-16 h-16" />
+                      </div>
+                    )}
                   </div>
                   <div className="p-6 flex-1 flex flex-col">
                     <span className="text-xs font-bold text-brand-700 uppercase tracking-wide mb-2">{item.category}</span>

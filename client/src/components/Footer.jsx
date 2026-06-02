@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom'
-import { ShieldAlert } from 'lucide-react'
-import { useAdmin } from '../context/AdminContext'
 
 export default function Footer() {
-  const { isAdmin, toggleAdmin } = useAdmin()
-
   return (
     <footer className="bg-univ-900 border-t border-slate-800 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -87,7 +83,7 @@ export default function Footer() {
               <li>
                 <Link to="/accessibilite" className="text-sm font-medium text-slate-300 hover:text-white transition-colors flex items-center gap-2">
                   Déclaration d'accessibilité (RGAA)
-                  <span className="w-2 h-2 rounded-full bg-yellow-500 flex-shrink-0" title="Statut RGAA : Partiellement conforme" />
+                  <span className="w-2 h-2 rounded-full bg-yellow-500 shrink-0" title="Statut RGAA : Partiellement conforme" />
                 </Link>
               </li>
             </ul>
@@ -124,18 +120,6 @@ export default function Footer() {
         {/* Bas de page */}
         <div className="pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
           <p>&copy; 2026 Université de Toulouse — École Doctorale GEETS.</p>
-          <button
-            onClick={toggleAdmin}
-            className={`flex items-center gap-2 px-3 py-1.5 text-xs font-semibold border transition-colors ${
-              isAdmin
-                ? 'bg-red-900/40 text-red-400 border-red-800 outline outline-1 outline-red-700'
-                : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-white'
-            }`}
-            title="Activer/Désactiver le mode administrateur (démo)"
-          >
-            <ShieldAlert className="w-3.5 h-3.5" />
-            {isAdmin ? 'Mode Admin Actif' : 'Simuler Admin'}
-          </button>
         </div>
       </div>
     </footer>
