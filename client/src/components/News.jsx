@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Calendar, Pencil, Trash2, Plus, X, Check } from 'lucide-react'
+import { Calendar, Pencil, Trash2, Plus, X, Check, FileText } from 'lucide-react'
 import { useAdmin } from '../context/AdminContext'
 
 function NewsForm({ initial = {}, onSave, onCancel, token }) {
@@ -115,7 +115,7 @@ function NewsCard({ item, isAdmin, token, onRefresh }) {
             <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-brand-50 text-brand-700">
-              <Calendar className="w-16 h-16" />
+              <FileText className="w-16 h-16" />
             </div>
           )}
           {/* Boutons admin */}
@@ -196,11 +196,18 @@ export default function News() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {news.map((item) => (
-            <NewsCard key={item.id} item={item} isAdmin={isAdmin} token={token} onRefresh={fetchNews} />
-          ))}
-        </div>
+        {news.length === 0 ? (
+          <div className="text-center py-12 bg-white border border-slate-200 shadow-sm max-w-2xl mx-auto">
+            <FileText className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+            <p className="text-slate-500 font-medium">Aucune actualité pour le moment.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {news.map((item) => (
+              <NewsCard key={item.id} item={item} isAdmin={isAdmin} token={token} onRefresh={fetchNews} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Clock, MapPin, Pencil, Trash2, Plus, X, Check } from 'lucide-react'
+import { Clock, MapPin, Pencil, Trash2, Plus, X, Check, Calendar } from 'lucide-react'
 import { useAdmin } from '../context/AdminContext'
 
 function parseDate(dateStr) {
@@ -226,11 +226,18 @@ export default function Agenda() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event) => (
-            <AgendaCard key={event.id} event={event} isAdmin={isAdmin} token={token} onRefresh={fetchEvents} />
-          ))}
-        </div>
+        {events.length === 0 ? (
+          <div className="text-center py-12 bg-slate-50 border border-slate-200 shadow-sm max-w-2xl mx-auto">
+            <Calendar className="w-12 h-12 text-slate-300 mx-auto mb-4" />
+            <p className="text-slate-500 font-medium">Aucun événement à venir.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {events.map((event) => (
+              <AgendaCard key={event.id} event={event} isAdmin={isAdmin} token={token} onRefresh={fetchEvents} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )
